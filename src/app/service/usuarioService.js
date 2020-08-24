@@ -14,6 +14,10 @@ class UsuarioService extends ApiService {
         return this.get(`/${id}/alunos`)
     }
 
+    salvarAluno(alunoDTO) {
+        return this.post('/alunos', alunoDTO)
+    }
+
 }
 
 export default UsuarioService;
