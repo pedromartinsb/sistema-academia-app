@@ -3,6 +3,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import Card from '../components/card'
 import FormGroup from '../components/form-group'
+import SelectMenu from '../components/selectMenu'
 
 import UsuarioService from '../app/service/usuarioService'
 import { mensagemSucesso, mensagemErro } from '../components/toastr'
@@ -157,6 +158,38 @@ class CadastroUsuario extends React.Component {
     }
 
     render() {
+
+        const uf = [
+            { label: 'Selecione...', value: '' },
+            { label: 'Acre', value: 'AC' },
+            { label: 'Alagoas', value: 'AL' },
+            { label: 'Amapá', value: 'AP' },
+            { label: 'Amazonas', value: 'AM' },
+            { label: 'Bahia', value: 'BA' },
+            { label: 'Ceará', value: 'CE' },
+            { label: 'Distrito Federal', value: 'DF' },
+            { label: 'Espírito Santo', value: 'ES' },
+            { label: 'Goiás', value: 'GO' },
+            { label: 'Maranhão', value: 'MA' },
+            { label: 'Mato Grosso', value: 'MT' },
+            { label: 'Mato Grosso do Sul', value: 'MS' },
+            { label: 'Minas Gerais', value: 'MG' },
+            { label: 'Pará', value: 'PA' },
+            { label: 'Paraíba', value: 'PB' },
+            { label: 'Paraná', value: 'PN' },
+            { label: 'Pernambuco', value: 'PE' },
+            { label: 'Piauí', value: 'PI' },
+            { label: 'Rio de Janeiro', value: 'RJ' },
+            { label: 'Rio Grande do Norte', value: 'RN' },
+            { label: 'Rio Grande do Sul', value: 'RS' },
+            { label: 'Rondônia', value: 'RO' },
+            { label: 'Roraima', value: 'RR' },
+            { label: 'Santa Catarina', value: 'SC' },
+            { label: 'São Paulo', value: 'SP' },
+            { label: 'Sergipe', value: 'SE' },
+            { label: 'Tocantins', value: 'TO' }
+        ]
+
         return (
             <Card title="Cadastro de Usuário">
                 <div className="row">
@@ -259,15 +292,19 @@ class CadastroUsuario extends React.Component {
                                         placeholder="Digite uma cidade" 
                                         onChange={e => this.setState({cidade: e.target.value})} />
                             </FormGroup>
+                            
+                            <FormGroup htmlFor="inputUF" label="UF: ">
+                                <SelectMenu id="inputUF" className="form-control" lista={uf} />
+                            </FormGroup>
 
-                            <FormGroup label="UF: *" htmlFor="inputUF">
+                            {/* <FormGroup label="UF: *" htmlFor="inputUF">
                                 <input type="text" 
                                         id="inputUF" 
                                         className="form-control" 
                                         name="uf" 
                                         placeholder="Digite um UF" 
                                         onChange={e => this.setState({uf: e.target.value})} />
-                            </FormGroup>
+                            </FormGroup> */}
 
                             <FormGroup label="Objetivo: *" htmlFor="inputObjetivo">
                                 <input type="text" 
