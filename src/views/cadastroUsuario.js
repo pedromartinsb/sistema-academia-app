@@ -27,7 +27,9 @@ class CadastroUsuario extends React.Component {
         profissao: '',
         estadoCivil: '',
         idade: '',
-        debito: ''
+        debito: '',
+        dataCadastro: '',
+        matriculado: ''
     }
 
     constructor() {
@@ -58,8 +60,16 @@ class CadastroUsuario extends React.Component {
             msgs.push('O campo CPF é obrigatório.')
         }
 
+        if(this.state.cpf.length > 11) {
+            msgs.push('O campo CPF deve conter no máximo 11 números.')
+        }
+
         if(!this.state.rg) {
             msgs.push('O campo RG é obrigatório.')
+        }
+
+        if(this.state.rg.length > 7) {
+            msgs.push('O campo RG deve conter no máximo 7 números.')
         }
 
         if(!this.state.nome) {
@@ -80,6 +90,10 @@ class CadastroUsuario extends React.Component {
 
         if(!this.state.cep) {
             msgs.push('O campo CEP é obrigatório.')
+        }
+
+        if(this.state.cep.length > 8) {
+            msgs.push('O campo CEP deve conter no máximo 8 números.')
         }
 
         if(!this.state.cidade) {
@@ -112,6 +126,14 @@ class CadastroUsuario extends React.Component {
             msgs.push('O campo Débito é obrigatório.')
         }
 
+        if(!this.state.dataCadastro) {
+            msgs.push('O campo Data Cadastro é obrigatório.')
+        }
+
+        if(!this.state.matriculado) {
+            msgs.push('O campo Matriculado é obrigatório.')
+        }
+
         return msgs
     }
 
@@ -141,7 +163,9 @@ class CadastroUsuario extends React.Component {
             profissao: this.state.profissao,
             estadoCivil: this.state.estadoCivil,
             idade: this.state.idade,
-            debito: this.state.debito
+            debito: this.state.debito,
+            dataCadastro: this.state.dataCadastro,
+            matriculado: this.state.matriculado
         }
 
         this.service.salvarAluno(alunoDTO)
@@ -188,6 +212,28 @@ class CadastroUsuario extends React.Component {
             { label: 'São Paulo', value: 'SP' },
             { label: 'Sergipe', value: 'SE' },
             { label: 'Tocantins', value: 'TO' }
+        ]
+
+        const estadoCivil = [
+            { label: 'Selecione...', value: '' },
+            { label: 'Solteiro(a)', value: 'Solteiro' },
+            { label: 'Casado(a)', value: 'Casado' },
+            { label: 'Divorsiado(a)', value: 'Divorsiado' },
+            { label: 'Viúvo(a)', value: 'Viuvo' }
+        ]
+
+        const objetivo = [
+            { label: 'Selecione...', value: '' },
+            { label: 'Ganho de Massa Muscular', value: 'Ganho de Massa Muscular' },
+            { label: 'Emagrecimento', value: 'Emagrecimento' },
+            { label: 'Definição Muscular', value: 'Definicao Muscular' },
+            { label: 'Qualidade de Vida', value: 'Qualidade de Vida' }
+        ]
+
+        const matriculado = [
+            { label: 'Selecione...', value: '' },
+            { label: 'Matriculado', value: 'true' },
+            { label: 'Não matriculado', value: 'false' }
         ]
 
         return (
@@ -294,25 +340,11 @@ class CadastroUsuario extends React.Component {
                             </FormGroup>
                             
                             <FormGroup htmlFor="inputUF" label="UF: ">
-                                <SelectMenu id="inputUF" className="form-control" lista={uf} />
+                                <SelectMenu id="inputUF" className="form-control" lista={uf} onChange={e => this.setState({uf: e.target.value})} />
                             </FormGroup>
 
-                            {/* <FormGroup label="UF: *" htmlFor="inputUF">
-                                <input type="text" 
-                                        id="inputUF" 
-                                        className="form-control" 
-                                        name="uf" 
-                                        placeholder="Digite um UF" 
-                                        onChange={e => this.setState({uf: e.target.value})} />
-                            </FormGroup> */}
-
-                            <FormGroup label="Objetivo: *" htmlFor="inputObjetivo">
-                                <input type="text" 
-                                        id="inputObjetivo" 
-                                        className="form-control" 
-                                        name="objetivo" 
-                                        placeholder="Digite um objetivo" 
-                                        onChange={e => this.setState({objetivo: e.target.value})} />
+                            <FormGroup htmlFor="inputObjetivo" label="Objetivo: *">
+                                <SelectMenu id="inputObjetivo" className="form-control" lista={objetivo} onChange={e => this.setState({objetivo: e.target.value})} />
                             </FormGroup>
                             
                             <FormGroup label="Profissão: *" htmlFor="inputProfissao">
@@ -324,13 +356,8 @@ class CadastroUsuario extends React.Component {
                                         onChange={e => this.setState({profissao: e.target.value})} />
                             </FormGroup>
 
-                            <FormGroup label="Estado Civil: *" htmlFor="inputEstadoCivil">
-                                <input type="text" 
-                                        id="inputEstadoCivil" 
-                                        className="form-control" 
-                                        name="estadoCivil" 
-                                        placeholder="Ex.: Casado" 
-                                        onChange={e => this.setState({estadoCivil: e.target.value})} />
+                            <FormGroup htmlFor="inputEstadoCivil" label="Estado Civil: *">
+                                <SelectMenu id="inputEstadoCivil" className="form-control" lista={estadoCivil} onChange={e => this.setState({estadoCivil: e.target.value})} />
                             </FormGroup>
 
                             <FormGroup label="Idade: *" htmlFor="inputIdade">
@@ -349,6 +376,18 @@ class CadastroUsuario extends React.Component {
                                         name="debito" 
                                         placeholder="Digite se o Aluno possuí débitos" 
                                         onChange={e => this.setState({debito: e.target.value})} />
+                            </FormGroup>
+
+                            <FormGroup label="Data de Cadastro: *" htmlFor="inputDataCadastro">
+                                <input type="date" 
+                                        id="inputDataCadastro" 
+                                        className="form-control" 
+                                        name="dataCadastro" 
+                                        onChange={e => this.setState({dataCadastro: e.target.value})} />
+                            </FormGroup>
+
+                            <FormGroup htmlFor="inputMatriculado" label="Matriculado: ">
+                                <SelectMenu id="inputMatriculado" className="form-control" lista={matriculado} onChange={e => this.setState({matriculado: e.target.value})} />
                             </FormGroup>
 
                             <button onClick={this.cadastrar} type="button" className="btn btn-success">Salvar</button>
