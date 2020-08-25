@@ -10,12 +10,17 @@ import AlunoService from '../../app/service/alunoService'
 
 import * as messages from '../../components/toastr'
 
+import { Dialog } from 'primereact/dialog'
+import { Button } from 'primereact/button'
+
 class ConsultaAlunos extends React.Component {
 
     state = {
         alunos : [],
         professores : [],
-        professor: ''
+        professor: '',
+        showConfirmDialog: false,
+        alunoDeletar: {}
     }
 
     constructor() {
@@ -56,14 +61,22 @@ class ConsultaAlunos extends React.Component {
         console.log(id)
     }
 
-    deletar = ( aluno ) => {
+    abrirConfirmacao = (aluno) => {
+        this.setState({ showConfirmDialog: true, alunoDeletar: aluno })
+    }
+
+    cancelarDelecao = () => {
+        this.setState({ showConfirmDialog: false, alunoDeletar: {} })
+    }
+
+    deletar = () => {
         this.service
-            .deletar(aluno.id)
+            .deletar(this.state.alunoDeletar.id)
             .then( response => {
                 const alunos = this.state.alunos
-                const index = alunos.indexOf(aluno)
+                const index = alunos.indexOf(this.state.alunoDeletar)
                 alunos.splice(index, 1)
-                this.setState(alunos)
+                this.setState({ alunos: alunos, showConfirmDialog: false })
                 messages.mensagemSucesso('Aluno deletado com sucesso.')
             }).catch( error => {
                 messages.mensagemErro('Erro ao tentar deletar o Aluno.')
@@ -75,6 +88,13 @@ class ConsultaAlunos extends React.Component {
         const professores = [
             { label: 'Selecione...', value: '' }
         ]
+
+        const confirmDialogFooter = (
+            <div>
+                <Button label="Confirmar" icon="pi pi-check" onClick={this.deletar} />
+                <Button label="Cancelar" icon="pi pi-times" onClick={this.cancelarDelecao} />
+            </div>
+        );
 
         this.state.professores.map( professor => {
             return (
@@ -101,10 +121,21 @@ class ConsultaAlunos extends React.Component {
                             <br />
                             <br />
                             <AlunosTables alunos={this.state.alunos} 
-                                          deletar={this.deletar}
+                                          deletar={this.abrirConfirmacao}
                                           editar={this.editar} />
                         </div>
                     </div>
+                </div>
+
+                <div>
+                    <Dialog header="Confirmação"
+                            visible={this.state.showConfirmDialog}
+                            style={{width: '50vw'}}
+                            footer={confirmDialogFooter}
+                            modal={true}
+                            onHide={() => this.setState({visible: false})}>
+                        Confirma a exclusão do Aluno?
+                    </Dialog>
                 </div>
             </Card>
         )
