@@ -8,6 +8,8 @@ import SelectMenu from '../../components/selectMenu'
 
 import AlunoService from '../../app/service/alunoService'
 
+import * as messages from '../../components/toastr'
+
 class ConsultaAlunos extends React.Component {
 
     state = {
@@ -50,6 +52,24 @@ class ConsultaAlunos extends React.Component {
             })
     }
 
+    editar = (id) => {
+        console.log(id)
+    }
+
+    deletar = ( aluno ) => {
+        this.service
+            .deletar(aluno.id)
+            .then( response => {
+                const alunos = this.state.alunos
+                const index = alunos.indexOf(aluno)
+                alunos.splice(index, 1)
+                this.setState(alunos)
+                messages.mensagemSucesso('Aluno deletado com sucesso.')
+            }).catch( error => {
+                messages.mensagemErro('Erro ao tentar deletar o Aluno.')
+            })
+    }
+
     render() {
 
         const professores = [
@@ -57,7 +77,9 @@ class ConsultaAlunos extends React.Component {
         ]
 
         this.state.professores.map( professor => {
-            professores.push({ label: professor.nome, value: professor.id })
+            return (
+                professores.push({ label: professor.nome, value: professor.id })
+            )
         });
 
         return (
@@ -78,7 +100,9 @@ class ConsultaAlunos extends React.Component {
 
                             <br />
                             <br />
-                            <AlunosTables alunos={this.state.alunos} />
+                            <AlunosTables alunos={this.state.alunos} 
+                                          deletar={this.deletar}
+                                          editar={this.editar} />
                         </div>
                     </div>
                 </div>

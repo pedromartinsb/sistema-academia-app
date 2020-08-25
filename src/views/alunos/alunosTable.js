@@ -10,7 +10,16 @@ export default props => {
                 <td>{aluno.cpf}</td>
                 <td>{aluno.rg}</td>
                 <td>
-
+                    <button type="button" 
+                            className="btn btn-primary"
+                            onClick={e => props.editar(aluno.id)}>
+                                Editar
+                    </button>
+                    <button type="button" 
+                            className="btn btn-danger" 
+                            onClick={e => props.deletar(aluno)}>
+                                Deletar
+                    </button>
                 </td>
             </tr>
         )

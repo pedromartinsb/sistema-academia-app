@@ -13,4 +13,8 @@ export default class AlunoService extends ApiService {
     buscarPorIdUsuario(id) {
         return this.get(`/${id}/usuarios`)
     }
+
+    deletar(id) {
+        return this.delete(`/${id}`)
+    }
 }
