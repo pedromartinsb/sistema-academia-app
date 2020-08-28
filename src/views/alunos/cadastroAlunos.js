@@ -177,8 +177,12 @@ class CadastroAlunos extends React.Component {
             });
     }
 
+    consultarAlunos = () => {
+        this.props.history.push('/consulta-alunos')
+    }
+
     cancelar = () => {
-        this.props.history.push('/login')
+        this.props.history.push('/home')
     }
 
     render() {
@@ -241,6 +245,10 @@ class CadastroAlunos extends React.Component {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="bs-component">
+                            <button onClick={this.consultarAlunos} type="button" className="btn btn-primary">Consultar Alunos</button>
+
+                            <br />
+                            <br />
                             <FormGroup label="Nome: *" htmlFor="inputNome">
                                 <input type="text" 
                                         id="inputNome"

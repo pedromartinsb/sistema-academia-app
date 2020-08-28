@@ -3,7 +3,6 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import Card from '../../components/card'
 import FormGroup from '../../components/form-group'
-import SelectMenu from '../../components/selectMenu'
 
 import UsuarioService from '../../app/service/usuarioService'
 import { mensagemSucesso, mensagemErro } from '../../components/toastr'
@@ -81,7 +80,11 @@ class CadastroInstrutores extends React.Component {
     }
 
     cancelar = () => {
-        this.props.history.push('/login')
+        this.props.history.push('/home')
+    }
+
+    consultarInstrutores = () => {
+        this.props.history.push('/consulta-instrutores')
     }
 
     render() {
@@ -91,6 +94,10 @@ class CadastroInstrutores extends React.Component {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="bs-component">
+                            <button onClick={this.consultarInstrutores} type="button" className="btn btn-primary">Consultar Instrutores</button>
+
+                            <br />
+                            <br />
                             <FormGroup label="Nome: *" htmlFor="inputNome">
                                 <input type="text" 
                                         id="inputNome"

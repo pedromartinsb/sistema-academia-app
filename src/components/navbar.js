@@ -16,7 +16,7 @@ function Navbar() {
                         <NavbarItem href="#/home" label="Home" />
                         <NavbarItem href="#/cadastro-alunos" label="Alunos" />
                         <NavbarItem href="#/cadastro-instrutores" label="Instrutores" />
-                        <NavbarItem href="#/" label="Treinos" />
+                        <NavbarItem href="#/cadastro-avaliacoes" label="Avaliação Física" />
                         <NavbarItem href="#/login" label="Login" />
                     </ul>
                 </div>

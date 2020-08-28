@@ -42,7 +42,7 @@ class ConsultaAlunos extends React.Component {
     }
 
     cadastrarNovo = () => {
-        this.props.history.push('/cadastro-usuarios')
+        this.props.history.push('/cadastro-alunos')
     }
 
     buscarTodos = () => {

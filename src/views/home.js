@@ -38,7 +38,7 @@ class Home extends React.Component {
             <div className="jumbotron">
                 <h1 className="display-3">Bem vindo!</h1>
                 <p className="lead">Esse é seu sistema de academias.</p>
-                <p className="lead">Você possui {this.state.alunos} alunos cadastrados.</p>
+                {/* <p className="lead">Você possui {this.state.alunos} alunos cadastrados.</p> */}
                 <hr className="my-4" />
                 <p>E essa é sua área administrativa, utilize um dos menus ou botões abaixo para navegar pelo sistema.</p>
                 <p className="lead">
@@ -48,9 +48,9 @@ class Home extends React.Component {
                        Cadastrar Aluno
                     </a>
                     <a className="btn btn-danger btn-lg" 
-                       href="https://bootswatch.com/flatly/#" 
+                       href="#/cadastro-avaliacoes" 
                        role="button"><i className="fa fa-users"></i>  
-                       Cadastrar Plano de Treino
+                       Cadastrar Avaliação Física
                     </a>
                 </p>
             </div>

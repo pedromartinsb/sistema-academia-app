@@ -32,8 +32,12 @@ class Login extends React.Component {
          })
     };
 
-    prepareCadastrar = () => {
-        this.props.history.push('/cadastro-usuarios')
+    prepareCadastrarAluno = () => {
+        this.props.history.push('/cadastro-alunos')
+    };
+
+    prepareCadastrarInstrutor = () => {
+        this.props.history.push('/cadastro-instrutores')
     };
 
     render() {
@@ -67,7 +71,8 @@ class Login extends React.Component {
                                             </FormGroup>
 
                                             <button onClick={this.entrar} className="btn btn-success">Entrar</button>
-                                            <button onClick={this.prepareCadastrar} className="btn btn-danger">Cadastrar</button>
+                                            <button onClick={this.prepareCadastrarAluno} className="btn btn-primary">Cadastrar Aluno</button>
+                                            <button onClick={this.prepareCadastrarInstrutor} className="btn btn-danger">Cadastrar Instrutor</button>
                                         </fieldset>
                                     </div>
                                 </div>
