@@ -7,6 +7,7 @@ import FormGroup from '../../components/form-group'
 import SelectMenu from '../../components/selectMenu'
 
 import AlunoService from '../../app/service/alunoService'
+import LocalStorageService from '../../app/service/localStorageService'
 
 import * as messages from '../../components/toastr'
 
@@ -29,7 +30,15 @@ class ConsultaAlunos extends React.Component {
     }
 
     componentDidMount() {
-        this.buscarTodos()
+        const usuarioLogado = LocalStorageService.obterItem('_usuario_logado')
+
+        if (usuarioLogado == null) {
+            messages.mensagemAlerta('Por favor logar para acessar o sistema.')
+            this.props.history.push('/login')
+        } else {
+            this.buscarTodos()
+        }
+        
     }
 
     cadastrarNovo = () => {

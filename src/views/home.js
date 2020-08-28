@@ -3,6 +3,8 @@ import React from 'react'
 import UsuarioService from '../app/service/usuarioService'
 import LocalStorageService from '../app/service/localStorageService'
 
+import * as messages from '../components/toastr'
+
 class Home extends React.Component {
 
     state = {
@@ -17,13 +19,18 @@ class Home extends React.Component {
     componentDidMount() {
         const usuarioLogado = LocalStorageService.obterItem('_usuario_logado')
 
-        this.usuarioService
+        if (usuarioLogado == null) {
+            messages.mensagemAlerta('Por favor logar para acessar o sistema.')
+            this.props.history.push('/login')
+        } else {
+           this.usuarioService
             .obterAlunos(usuarioLogado.id)
             .then( response => {
                 this.setState({ alunos: response.data})
             }).catch( error => {
                 console.log(error.response)
-            });
+            }); 
+        }
     }
 
     render() {
