@@ -1,6 +1,10 @@
 import React from 'react'
 
+import AvaliacoesChart from './avaliacoesChart'
+
 export default props => {
+
+    console.log(props.avaliacoes)
 
     const rows = props.avaliacoes.map( avaliacao => {
         return (
@@ -26,7 +30,16 @@ export default props => {
         )
     })
 
+    /* const avaliacoesChart = props.avaliacoes.map( avaliacao => {
+        return (
+            <AvaliacoesChart avaliacao={avaliacao} />
+        )
+    }) */
+
+    const avaliacoesChart = <AvaliacoesChart avaliacoes={props.avaliacoes} />
+
     return (
+        <>
         <table className="table table-hover">
             <thead>
                 <tr>
@@ -43,5 +56,8 @@ export default props => {
                 {rows}
             </tbody>
         </table>
+
+        {avaliacoesChart}
+        </>
     )
 }

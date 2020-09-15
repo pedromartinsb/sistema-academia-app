@@ -5,7 +5,9 @@ import Card from '../../components/card'
 import FormGroup from '../../components/form-group'
 
 import UsuarioService from '../../app/service/usuarioService'
-import { mensagemSucesso, mensagemErro } from '../../components/toastr'
+import LocalStorageService from '../../app/service/localStorageService'
+
+import { mensagemSucesso, mensagemErro, mensagemAlerta } from '../../components/toastr'
 
 class CadastroInstrutores extends React.Component {
 
@@ -20,6 +22,20 @@ class CadastroInstrutores extends React.Component {
     constructor() {
         super()
         this.service = new UsuarioService()
+    }
+
+    componentDidMount() {
+        const usuarioLogado = LocalStorageService.obterItem('_usuario_logado')
+
+        if (usuarioLogado == null) {
+            mensagemAlerta('Por favor logar para acessar o sistema.')
+            this.props.history.push('/login')
+        } else {
+            if(usuarioLogado.tipoUsuario === 1) {
+                mensagemAlerta('Você não tem permissão para acessar essa tela.')
+                this.props.history.push('/home')
+            }
+        }        
     }
 
     validar() {

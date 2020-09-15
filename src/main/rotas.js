@@ -6,11 +6,15 @@ import Home from '../views/home'
 import CadastroAlunos from '../views/alunos/cadastroAlunos'
 import CadastroInstrutores from '../views/instrutores/cadastroInstrutores'
 import CadastroAvaliacoes from '../views/avaliacao-fisica/cadastroAvaliacoes'
+import CadastroTreinos from '../views/treinos/cadastroTreino'
 
 import ConsultaLancamentos from '../views/lancamentos/consultaLancamentos'
 import ConsultaAlunos from '../views/alunos/consultaAlunos'
 import ConsultaInstrutores from '../views/instrutores/consultaInstrutores'
 import ConsultaAvaliacoes from '../views/avaliacao-fisica/consultaAvaliacoes'
+import ConsultaTreinos from '../views/treinos/consultaTreinos'
+
+import AlunosPrintPdf from '../views/alunos/alunosPrintPdf'
 
 import { Route, Switch, HashRouter } from 'react-router-dom'
 
@@ -24,11 +28,15 @@ function Rotas() {
                 <Route path="/cadastro-alunos" component={CadastroAlunos} />
                 <Route path="/cadastro-instrutores" component={CadastroInstrutores} />
                 <Route path="/cadastro-avaliacoes" component={CadastroAvaliacoes} />
+                <Route path="/cadastro-treinos" component={CadastroTreinos} />
 
                 <Route path="/consulta-lancamentos" component={ConsultaLancamentos} />
                 <Route path="/consulta-alunos" component={ConsultaAlunos} />
                 <Route path="/consulta-instrutores" component={ConsultaInstrutores} />
                 <Route path="/consulta-avaliacoes" component={ConsultaAvaliacoes} />
+                <Route path="/consulta-treinos" component={ConsultaTreinos} />
+
+                <Route path="/alunos-pdf" component={AlunosPrintPdf} />
             </Switch>
         </HashRouter>
     );

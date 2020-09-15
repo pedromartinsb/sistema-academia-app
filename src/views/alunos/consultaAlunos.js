@@ -35,14 +35,20 @@ class ConsultaAlunos extends React.Component {
         if (usuarioLogado == null) {
             messages.mensagemAlerta('Por favor logar para acessar o sistema.')
             this.props.history.push('/login')
+        } else if(usuarioLogado.tipoUsuario === 1) {
+            messages.mensagemAlerta('Você não tem permissão para acessar essa tela.')
+            this.props.history.push('/home')
         } else {
             this.buscarTodos()
-        }
-        
+        }          
     }
 
     cadastrarNovo = () => {
         this.props.history.push('/cadastro-alunos')
+    }
+
+    imprimirPdf = () => {
+        this.props.history.push('/alunos-pdf')
     }
 
     buscarTodos = () => {
@@ -117,15 +123,16 @@ class ConsultaAlunos extends React.Component {
                     <div className="col-md-12">
                         <div className="bs-component">
                             <button onClick={this.cadastrarNovo} type="button" className="btn btn-primary">Cadastrar Novo</button>
+                            <button onClick={this.imprimirPdf} type="button" className="btn btn-danger">Imprimir PDF</button>
 
-                            <br />
+                            {/* <br />
                             <br />
                             <FormGroup htmlFor="inputProfessores" label="Professores: ">
                                 <SelectMenu id="inputProfessores" className="form-control" lista={professores} onChange={e => this.setState({professor: e.target.value})} />
                             </FormGroup>
 
                             <button onClick={this.buscarPorIdUsuario} type="button" className="btn btn-success">Buscar</button>
-                            <button onClick={this.buscarTodos} type="button" className="btn btn-danger">Buscar Todos</button>
+                            <button onClick={this.buscarTodos} type="button" className="btn btn-danger">Buscar Todos</button> */}
 
                             <br />
                             <br />

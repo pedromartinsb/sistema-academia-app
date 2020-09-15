@@ -17,6 +17,7 @@ function Navbar() {
                         <NavbarItem href="#/cadastro-alunos" label="Alunos" />
                         <NavbarItem href="#/cadastro-instrutores" label="Instrutores" />
                         <NavbarItem href="#/cadastro-avaliacoes" label="Avaliação Física" />
+                        <NavbarItem href="#/cadastro-treinos" label="Treinos" />
                         <NavbarItem href="#/login" label="Login" />
                     </ul>
                 </div>

@@ -42,9 +42,12 @@ class CadastroAvaliacoes extends React.Component {
         if (usuarioLogado == null) {
             messages.mensagemAlerta('Por favor logar para acessar o sistema.')
             this.props.history.push('/login')
-        }  else {
+        } else if(usuarioLogado.tipoUsuario === 1) {
+            messages.mensagemAlerta('Você não tem permissão para acessar essa tela.')
+            this.props.history.push('/home')
+        } else {
             this.buscarTodosAlunos()
-        }        
+        }       
     }
 
     buscarTodosAlunos = () => {

@@ -4,9 +4,9 @@ import { withRouter } from 'react-router-dom'
 import Card from '../../components/card'
 import FormGroup from '../../components/form-group'
 import SelectMenu from '../../components/selectMenu'
-import AvaliacoesTables from './avaliacoesTable'
+import TreinosTable from './treinosTable'
 
-import AvaliacaoService from '../../app/service/avaliacaoService'
+import TreinoService from '../../app/service/treinoService'
 import AlunoService from '../../app/service/alunoService'
 import LocalStorageService from '../../app/service/localStorageService'
 
@@ -15,19 +15,19 @@ import * as messages from '../../components/toastr'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
 
-class ConsultaAvaliacoes extends React.Component {
+class ConsultaTreinos extends React.Component {
 
     state = {
-        alunos : [],
-        aluno: '',
+        treinos : [],
         showConfirmDialog: false,
-        avaliacaoDeletar: {},
-        avaliacoes : []
+        treinoDeletar: {},
+        alunos : [],
+        aluno: ''
     }
 
     constructor() {
         super();
-        this.avaliacaoService = new AvaliacaoService()
+        this.treinoService = new TreinoService()
         this.alunoService = new AlunoService()
     }
 
@@ -37,9 +37,17 @@ class ConsultaAvaliacoes extends React.Component {
         if (usuarioLogado == null) {
             messages.mensagemAlerta('Por favor logar para acessar o sistema.')
             this.props.history.push('/login')
-        }  else {
+        } else if(usuarioLogado.tipoUsuario === 1) {
+            messages.mensagemAlerta('Você não tem permissão para acessar essa tela.')
+            this.props.history.push('/home')
+        } else {
+            this.buscarTodos()
             this.buscarTodosAlunos()
         }        
+    }
+
+    cadastrarNovo = () => {
+        this.props.history.push('/cadastro-treinos')
     }
 
     buscarTodosAlunos = () => {
@@ -52,16 +60,26 @@ class ConsultaAvaliacoes extends React.Component {
             })
     }
 
+    buscarTodos = () => {
+        this.treinoService
+            .buscarTodos()
+            .then( resposta => {
+                this.setState({ treinos: resposta.data})
+            }).catch( error => {
+                console.log(error)
+            })
+    }
+
     buscar = () => {
         if(!this.state.aluno) {
             messages.mensagemErro('O preenchimento do campo Aluno é obrigatório.')
             return false;
         }
 
-        this.avaliacaoService
+        this.treinoService
             .consultarPorAluno(this.state.aluno)
             .then( resposta => {
-                this.setState({ avaliacoes: resposta.data})
+                this.setState({ treinos: resposta.data})
             }).catch( error => {
                 console.log(error)
             })
@@ -71,35 +89,29 @@ class ConsultaAvaliacoes extends React.Component {
         console.log(id)
     }
 
-    abrirConfirmacao = (avaliacao) => {
-        this.setState({ showConfirmDialog: true, avaliacaoDeletar: avaliacao })
+    abrirConfirmacao = (treino) => {
+        this.setState({ showConfirmDialog: true, treinoDeletar: treino })
     }
 
     cancelarDelecao = () => {
-        this.setState({ showConfirmDialog: false, avaliacaoDeletar: {} })
+        this.setState({ showConfirmDialog: false, treinoDeletar: {} })
     }
 
     deletar = () => {
-        this.service
-            .deletar(this.state.avaliacaoDeletar.id)
+        this.treinoService
+            .deletar(this.state.treinoDeletar.id)
             .then( response => {
-                const lancamentos = this.state.lancamentos
-                const index = lancamentos.indexOf(this.state.lancamentoDeletar)
-                lancamentos.splice(index, 1)
-                this.setState({ lancamentos: lancamentos, showConfirmDialog: false })
-                messages.mensagemSucesso('Lançamento deletado com sucesso.')
+                const treinos = this.state.treinos
+                const index = treinos.indexOf(this.state.treinoDeletar)
+                treinos.splice(index, 1)
+                this.setState({ treinos: treinos, showConfirmDialog: false })
+                messages.mensagemSucesso('Treino deletado com sucesso.')
             }).catch( error => {
-                messages.mensagemErro('Erro ao tentar deletar o Lançamento.')
+                messages.mensagemErro('Erro ao tentar deletar o Treino.')
             })
     }
 
     render() {
-        const confirmDialogFooter = (
-            <div>
-                <Button label="Confirmar" icon="pi pi-check" onClick={this.deletar} />
-                <Button label="Cancelar" icon="pi pi-times" onClick={this.cancelarDelecao} />
-            </div>
-        );
 
         const alunos = [
             { label: 'Selecione...', value: '' }
@@ -111,8 +123,25 @@ class ConsultaAvaliacoes extends React.Component {
             )
         });
 
+        const confirmDialogFooter = (
+            <div>
+                <Button label="Confirmar" icon="pi pi-check" onClick={this.deletar} />
+                <Button label="Cancelar" icon="pi pi-times" onClick={this.cancelarDelecao} />
+            </div>
+        );
+
         return (
-            <Card title="Consulta Avaliações Físicas">
+            <Card title="Consulta Treinos">
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="bs-component">
+                            <button onClick={this.cadastrarNovo} type="button" className="btn btn-primary">Cadastrar Novo</button>
+                        </div>
+                    </div>
+                </div>
+
+                <br/>
+                <br/>
                 <div className="row">
                     <div className="col-md-6">
                         <div className="bs-component">
@@ -121,17 +150,19 @@ class ConsultaAvaliacoes extends React.Component {
                             </FormGroup>
 
                             <button onClick={this.buscar} type="button" className="btn btn-success">Buscar</button>
+                            <button onClick={this.buscarTodos} type="button" className="btn btn-danger">Buscar Todos</button>
                         </div>
                     </div>
                 </div>
 
                 <br />
+                <br />
                 <div className="row">
                     <div className="col-md-12">
                         <div className="bs-component">
-                            <AvaliacoesTables avaliacoes={this.state.avaliacoes} 
-                                               deletar={this.abrirConfirmacao}
-                                               editar={this.editar} />
+                            <TreinosTable treinos={this.state.treinos} 
+                                          deletar={this.abrirConfirmacao}
+                                          editar={this.editar} />
                         </div>
                     </div>
                 </div>
@@ -143,7 +174,7 @@ class ConsultaAvaliacoes extends React.Component {
                             footer={confirmDialogFooter}
                             modal={true}
                             onHide={() => this.setState({visible: false})}>
-                        Confirma a exclusão da Avaliação Física?
+                        Confirma a exclusão do Treino?
                     </Dialog>
                 </div>
             </Card>
@@ -151,4 +182,4 @@ class ConsultaAvaliacoes extends React.Component {
     }
 }
 
-export default withRouter( ConsultaAvaliacoes )
+export default withRouter( ConsultaTreinos )
