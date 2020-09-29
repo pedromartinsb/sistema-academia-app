@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 import Card from '../../components/card'
 import FormGroup from '../../components/form-group'
 import SelectMenu from '../../components/selectMenu'
+import NavbarInstrutor from '../../components/navbar-instrutor'
 
 import TreinoService from '../../app/service/treinoService'
 import AlunoService from '../../app/service/alunoService'
@@ -97,7 +98,7 @@ class CadastroTreinos extends React.Component {
         this.props.history.push('/consulta-treinos')
     }
 
-    consultarInstrutores = () => {
+    consultarTreinos = () => {
         this.props.history.push('/consulta-treinos')
     }
 
@@ -114,11 +115,13 @@ class CadastroTreinos extends React.Component {
         });
 
         return (
+            <>
+            <NavbarInstrutor />
             <Card title="Cadastro de Treinos">
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="bs-component">
-                            <button onClick={this.consultarInstrutores} type="button" className="btn btn-primary">Consultar Treinos</button>
+                            <button onClick={this.consultarTreinos} type="button" className="btn btn-primary">Consultar Treinos</button>
 
                             <br />
                             <br />
@@ -150,6 +153,7 @@ class CadastroTreinos extends React.Component {
                     </div>
                 </div>
             </Card>
+            </>
         );
     }
 }

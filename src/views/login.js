@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom'
 import UsuarioService from '../app/service/usuarioService'
 import LocalStorageService from '../app/service/localStorageService'
 import { mensagemErro, mensagemSucesso } from '../components/toastr'
+import Navbar from '../components/navbar'
 
 class Login extends React.Component {
 
@@ -17,6 +18,14 @@ class Login extends React.Component {
     constructor() {
         super();
         this.service = new UsuarioService()
+    }
+
+    componentDidMount() {
+        const usuarioLogado = LocalStorageService.obterItem('_usuario_logado')
+
+        if (usuarioLogado !== null) {
+            LocalStorageService.removerItem('_usuario_logado')
+        }        
     }
 
     entrar = () => {
@@ -42,6 +51,8 @@ class Login extends React.Component {
 
     render() {
         return (
+            <>
+            <Navbar />
             <div className="row">
                 <div className="col-md-6" style={ {position: 'relative', left: '300px'} }>
                     <div className="bs-docs-section">
@@ -81,6 +92,7 @@ class Login extends React.Component {
                     </div>
                 </div>
             </div>
+            </>
         )
     }
 

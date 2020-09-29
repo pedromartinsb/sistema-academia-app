@@ -5,6 +5,8 @@ import Card from '../../components/card'
 import FormGroup from '../../components/form-group'
 import SelectMenu from '../../components/selectMenu'
 import AvaliacoesTables from './avaliacoesTable'
+import NavbarInstrutor from '../../components/navbar-instrutor'
+import NavbarAluno from '../../components/navbar-aluno'
 
 import AvaliacaoService from '../../app/service/avaliacaoService'
 import AlunoService from '../../app/service/alunoService'
@@ -94,6 +96,8 @@ class ConsultaAvaliacoes extends React.Component {
     }
 
     render() {
+        const usuarioLogado = LocalStorageService.obterItem('_usuario_logado')
+
         const confirmDialogFooter = (
             <div>
                 <Button label="Confirmar" icon="pi pi-check" onClick={this.deletar} />
@@ -111,42 +115,95 @@ class ConsultaAvaliacoes extends React.Component {
             )
         });
 
+        if (usuarioLogado !== null) {
+            if (usuarioLogado.tipoUsuario === 1) {
+                return (
+                    <>
+                    <NavbarAluno />
+                    <Card title="Consulta Avaliações Físicas">
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="bs-component">
+                                    <FormGroup htmlFor="inputAlunos" label="Alunos: *">
+                                        <SelectMenu id="inputAlunos" className="form-control" lista={alunos} onChange={e => this.setState({aluno: e.target.value})} />
+                                    </FormGroup>
+        
+                                    <button onClick={this.buscar} type="button" className="btn btn-success">Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <br />
+                        <div className="row">
+                            <div className="col-md-12">
+                                <div className="bs-component">
+                                    <AvaliacoesTables avaliacoes={this.state.avaliacoes} 
+                                                       deletar={this.abrirConfirmacao}
+                                                       editar={this.editar} />
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div>
+                            <Dialog header="Confirmação"
+                                    visible={this.state.showConfirmDialog}
+                                    style={{width: '50vw'}}
+                                    footer={confirmDialogFooter}
+                                    modal={true}
+                                    onHide={() => this.setState({visible: false})}>
+                                Confirma a exclusão da Avaliação Física?
+                            </Dialog>
+                        </div>
+                    </Card>
+                    </>
+                )
+            }
+
+        } else {
+            return (
+                <>
+                <NavbarInstrutor />
+                <Card title="Consulta Avaliações Físicas">
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="bs-component">
+                                <FormGroup htmlFor="inputAlunos" label="Alunos: *">
+                                    <SelectMenu id="inputAlunos" className="form-control" lista={alunos} onChange={e => this.setState({aluno: e.target.value})} />
+                                </FormGroup>
+    
+                                <button onClick={this.buscar} type="button" className="btn btn-success">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <br />
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="bs-component">
+                                <AvaliacoesTables avaliacoes={this.state.avaliacoes} 
+                                                   deletar={this.abrirConfirmacao}
+                                                   editar={this.editar} />
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div>
+                        <Dialog header="Confirmação"
+                                visible={this.state.showConfirmDialog}
+                                style={{width: '50vw'}}
+                                footer={confirmDialogFooter}
+                                modal={true}
+                                onHide={() => this.setState({visible: false})}>
+                            Confirma a exclusão da Avaliação Física?
+                        </Dialog>
+                    </div>
+                </Card>
+                </>
+            )
+        }
+
         return (
-            <Card title="Consulta Avaliações Físicas">
-                <div className="row">
-                    <div className="col-md-6">
-                        <div className="bs-component">
-                            <FormGroup htmlFor="inputAlunos" label="Alunos: *">
-                                <SelectMenu id="inputAlunos" className="form-control" lista={alunos} onChange={e => this.setState({aluno: e.target.value})} />
-                            </FormGroup>
-
-                            <button onClick={this.buscar} type="button" className="btn btn-success">Buscar</button>
-                        </div>
-                    </div>
-                </div>
-
-                <br />
-                <div className="row">
-                    <div className="col-md-12">
-                        <div className="bs-component">
-                            <AvaliacoesTables avaliacoes={this.state.avaliacoes} 
-                                               deletar={this.abrirConfirmacao}
-                                               editar={this.editar} />
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <Dialog header="Confirmação"
-                            visible={this.state.showConfirmDialog}
-                            style={{width: '50vw'}}
-                            footer={confirmDialogFooter}
-                            modal={true}
-                            onHide={() => this.setState({visible: false})}>
-                        Confirma a exclusão da Avaliação Física?
-                    </Dialog>
-                </div>
-            </Card>
+            <></>
         )
     }
 }

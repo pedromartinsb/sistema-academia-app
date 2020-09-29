@@ -14,6 +14,7 @@ import * as messages from '../../components/toastr'
 
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
+import NavbarInstrutor from '../../components/navbar-instrutor'
 
 class ConsultaTreinos extends React.Component {
 
@@ -131,6 +132,8 @@ class ConsultaTreinos extends React.Component {
         );
 
         return (
+            <>
+            <NavbarInstrutor />
             <Card title="Consulta Treinos">
                 <div className="row">
                     <div className="col-md-12">
@@ -178,6 +181,7 @@ class ConsultaTreinos extends React.Component {
                     </Dialog>
                 </div>
             </Card>
+            </>
         )
     }
 }

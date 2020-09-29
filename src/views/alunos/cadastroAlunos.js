@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 import Card from '../../components/card'
 import FormGroup from '../../components/form-group'
 import SelectMenu from '../../components/selectMenu'
+import NavbarInstrutor from '../../components/navbar-instrutor'
 
 import UsuarioService from '../../app/service/usuarioService'
 import LocalStorageService from '../../app/service/localStorageService'
@@ -255,6 +256,8 @@ class CadastroAlunos extends React.Component {
         ]
 
         return (
+            <>
+            <NavbarInstrutor />
             <Card title="Cadastro de Alunos">
                 <div className="row">
                     <div className="col-lg-12">
@@ -418,6 +421,7 @@ class CadastroAlunos extends React.Component {
                     </div>
                 </div>
             </Card>
+            </>
         );
     }
 }

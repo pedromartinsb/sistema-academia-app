@@ -17,7 +17,7 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="container">
           <Rotas />
         </div>

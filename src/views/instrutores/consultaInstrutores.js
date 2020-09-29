@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 
 import Card from '../../components/card'
 import InstrutoresTable from './instrutoresTable'
+import NavbarInstrutor from '../../components/navbar-instrutor'
 
 import InstrutorService from '../../app/service/instrutorService'
 import LocalStorageService from '../../app/service/localStorageService'
@@ -89,6 +90,8 @@ class ConsultaInstrutores extends React.Component {
         );
 
         return (
+            <>
+            <NavbarInstrutor />
             <Card title="Consulta Instrutores">
                 <div className="row">
                     <div className="col-md-12">
@@ -115,6 +118,7 @@ class ConsultaInstrutores extends React.Component {
                     </Dialog>
                 </div>
             </Card>
+            </>
         )
     }
 }

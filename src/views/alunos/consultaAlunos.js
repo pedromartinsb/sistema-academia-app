@@ -3,8 +3,7 @@ import { withRouter } from 'react-router-dom'
 
 import Card from '../../components/card'
 import AlunosTables from './alunosTable'
-import FormGroup from '../../components/form-group'
-import SelectMenu from '../../components/selectMenu'
+import NavbarInstrutor from '../../components/navbar-instrutor'
 
 import AlunoService from '../../app/service/alunoService'
 import LocalStorageService from '../../app/service/localStorageService'
@@ -118,6 +117,8 @@ class ConsultaAlunos extends React.Component {
         });
 
         return (
+            <>
+            <NavbarInstrutor />
             <Card title="Consulta Alunos">
                 <div className="row">
                     <div className="col-md-12">
@@ -154,6 +155,7 @@ class ConsultaAlunos extends React.Component {
                     </Dialog>
                 </div>
             </Card>
+            </>
         )
     }
 }

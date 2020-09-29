@@ -11,7 +11,7 @@ export default props => {
                     <button type="button" 
                             className="btn btn-primary"
                             onClick={e => props.editar(treino.id)}>
-                                Editar
+                                Consultar Exercícios
                     </button>
                     <button type="button" 
                             className="btn btn-danger" 

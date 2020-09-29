@@ -3,6 +3,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import Card from '../../components/card'
 import FormGroup from '../../components/form-group'
+import NavbarInstrutor from '../../components/navbar-instrutor'
 
 import UsuarioService from '../../app/service/usuarioService'
 import LocalStorageService from '../../app/service/localStorageService'
@@ -106,6 +107,8 @@ class CadastroInstrutores extends React.Component {
     render() {
 
         return (
+            <>
+            <NavbarInstrutor />
             <Card title="Cadastro de Instrutores">
                 <div className="row">
                     <div className="col-lg-12">
@@ -173,6 +176,7 @@ class CadastroInstrutores extends React.Component {
                     </div>
                 </div>
             </Card>
+            </>
         );
     }
 }
