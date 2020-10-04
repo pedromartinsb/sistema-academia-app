@@ -8,6 +8,7 @@ import SelectMenu from '../../components/selectMenu'
 import AvaliacaoService from '../../app/service/avaliacaoService'
 import NavbarInstrutor from '../../components/navbar-instrutor'
 import AlunoService from '../../app/service/alunoService'
+import InstrutorService from '../../app/service/instrutorService'
 import LocalStorageService from '../../app/service/localStorageService'
 
 import * as messages from '../../components/toastr'
@@ -17,6 +18,8 @@ class CadastroAvaliacoes extends React.Component {
     state = {
         alunos : [],
         aluno: '',
+        instrutores : [],
+        instrutor: '',
         avaliador: '',
         altura: '',
         gorduraCorporal: '',
@@ -35,6 +38,7 @@ class CadastroAvaliacoes extends React.Component {
         super()
         this.avaliacaoService = new AvaliacaoService()
         this.alunoService = new AlunoService()
+        this.instrutorService = new InstrutorService()
     }
 
     componentDidMount() {
@@ -48,6 +52,7 @@ class CadastroAvaliacoes extends React.Component {
             this.props.history.push('/home')
         } else {
             this.buscarTodosAlunos()
+            this.buscarTodosInstrutores()
         }       
     }
 
@@ -56,6 +61,16 @@ class CadastroAvaliacoes extends React.Component {
             .buscarTodos()
             .then( resposta => {
                 this.setState({ alunos: resposta.data})
+            }).catch( error => {
+                console.log(error)
+            })
+    }
+
+    buscarTodosInstrutores = () => {
+        this.instrutorService
+            .buscarTodos()
+            .then( resposta => {
+                this.setState({ instrutores: resposta.data })
             }).catch( error => {
                 console.log(error)
             })
@@ -166,6 +181,16 @@ class CadastroAvaliacoes extends React.Component {
             )
         });
 
+        const instrutores = [
+            { label: 'Selecione...', value: '' }
+        ]
+
+        this.state.instrutores.map( instrutor => {
+            return (
+                instrutores.push({ label: instrutor.nome, value: instrutor.nome })
+            )
+        });
+
         return (
             <>
             <NavbarInstrutor />
@@ -181,13 +206,8 @@ class CadastroAvaliacoes extends React.Component {
                                 <SelectMenu id="inputAlunos" className="form-control" lista={alunos} onChange={e => this.setState({aluno: e.target.value})} />
                             </FormGroup>
 
-                            <FormGroup label="Avaliador: *" htmlFor="inputAvaliador">
-                                <input type="text" 
-                                        id="inputAvaliador"
-                                        className="form-control" 
-                                        name="avaliador"
-                                        placeholder="Ex.: Coach Jonas" 
-                                        onChange={e => this.setState({avaliador: e.target.value})} />
+                            <FormGroup htmlFor="inputIntrutores" label="Avaliador/Instrutor: *">
+                                <SelectMenu id="inputIntrutores" className="form-control" lista={instrutores} onChange={e => this.setState({avaliador: e.target.value})} />
                             </FormGroup>
 
                             <FormGroup label="Data da Avaliação: *" htmlFor="inputDataAvaliacao">

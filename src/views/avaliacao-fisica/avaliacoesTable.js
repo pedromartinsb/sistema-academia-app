@@ -7,6 +7,7 @@ export default props => {
     console.log(props.avaliacoes)
 
     const rows = props.avaliacoes.map( avaliacao => {
+        console.log(avaliacao)
         return (
             <tr key={avaliacao.id}>
                 <td>{avaliacao.aluno.nome}</td>
