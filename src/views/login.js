@@ -82,8 +82,8 @@ class Login extends React.Component {
                                             </FormGroup>
 
                                             <button onClick={this.entrar} className="btn btn-success">Entrar</button>
-                                            <button onClick={this.prepareCadastrarAluno} className="btn btn-primary">Cadastrar Aluno</button>
-                                            <button onClick={this.prepareCadastrarInstrutor} className="btn btn-danger">Cadastrar Instrutor</button>
+                                            {/* <button onClick={this.prepareCadastrarAluno} className="btn btn-primary">Cadastrar Aluno</button>
+                                            <button onClick={this.prepareCadastrarInstrutor} className="btn btn-danger">Cadastrar Instrutor</button> */}
                                         </fieldset>
                                     </div>
                                 </div>

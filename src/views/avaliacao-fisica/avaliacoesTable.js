@@ -15,11 +15,11 @@ export default props => {
                 <td>{avaliacao.desempenho.altura}</td>
                 <td>{avaliacao.desempenho.gorduraCorporal}</td>
                 <td>
-                    <button type="button" 
+                    {/* <button type="button" 
                             className="btn btn-primary"
                             onClick={e => props.editar(avaliacao.id)}>
                                 Editar
-                    </button>
+                    </button> */}
                     <button type="button" 
                             className="btn btn-danger" 
                             onClick={e => props.deletar(avaliacao.id)}>
@@ -57,7 +57,7 @@ export default props => {
             </tbody>
         </table>
 
-        {avaliacoesChart}
+        {/* {avaliacoesChart} */}
         </>
     )
 }

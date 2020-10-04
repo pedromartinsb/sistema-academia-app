@@ -90,7 +90,7 @@ class CadastroInstrutores extends React.Component {
         this.service.salvarInstrutor(instrutorDTO)
             .then( response => {
                 mensagemSucesso('Instrutor cadastrado com sucesso! Faça o login para acessar o sistema.')
-                this.props.history.push('/login')
+                this.props.history.push('/consulta-instrutores')
             }).catch( error => {
                 mensagemErro(error.response.data)
             });

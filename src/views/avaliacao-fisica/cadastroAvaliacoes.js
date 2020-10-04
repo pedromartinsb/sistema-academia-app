@@ -6,6 +6,7 @@ import FormGroup from '../../components/form-group'
 import SelectMenu from '../../components/selectMenu'
 
 import AvaliacaoService from '../../app/service/avaliacaoService'
+import NavbarInstrutor from '../../components/navbar-instrutor'
 import AlunoService from '../../app/service/alunoService'
 import LocalStorageService from '../../app/service/localStorageService'
 
@@ -143,7 +144,7 @@ class CadastroAvaliacoes extends React.Component {
         this.avaliacaoService.salvar(avaliacaoDTO)
             .then( response => {
                 messages.mensagemSucesso('Avaliação Física cadastrada com sucesso!')
-                this.props.history.push('/home')
+                this.props.history.push('/consulta-avaliacoes')
             }).catch( error => {
                 messages.mensagemErro(error.response.data)
             });
@@ -166,6 +167,8 @@ class CadastroAvaliacoes extends React.Component {
         });
 
         return (
+            <>
+            <NavbarInstrutor />
             <Card title="Cadastro de Avaliação Física">
                 <div className="row">
                     <div className="col-lg-12">
@@ -274,6 +277,7 @@ class CadastroAvaliacoes extends React.Component {
                     </div>
                 </div>
             </Card>
+            </>
         );
     }
 }

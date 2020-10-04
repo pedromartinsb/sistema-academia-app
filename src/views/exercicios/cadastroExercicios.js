@@ -108,7 +108,7 @@ class CadastroExercicios extends React.Component {
         this.exercicioService.salvar(exercicioDTO)
             .then( response => {
                 mensagemSucesso('Exercício cadastrado com sucesso!')
-                this.props.history.push('/home')
+                this.props.history.push('/cadastro-exercicios')
             }).catch( error => {
                 mensagemErro(error.response.data)
             });
