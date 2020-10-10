@@ -8,11 +8,11 @@ export default props => {
                 <td>{treino.nome}</td>
                 <td>{treino.aluno.nome}</td>
                 <td>
-                    <button type="button" 
+                    {/* <button type="button" 
                             className="btn btn-primary"
                             onClick={e => props.editar(treino.id)}>
                                 Consultar Exercícios
-                    </button>
+                    </button> */}
                     <button type="button" 
                             className="btn btn-danger" 
                             onClick={e => props.deletar(treino)}>

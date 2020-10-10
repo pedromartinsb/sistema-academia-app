@@ -9,6 +9,7 @@ export default props => {
     console.log(props.avaliacoes)
 
     const rows = props.avaliacoes.map( avaliacao => {
+        console.log(avaliacao)
         return (
             <tr key={avaliacao.id}>
                 <td>{avaliacao.aluno.nome}</td>
@@ -17,11 +18,11 @@ export default props => {
                 <td>{avaliacao.desempenho.altura}</td>
                 <td>{avaliacao.desempenho.gorduraCorporal}</td>
                 <td>
-                    <button type="button" 
+                    {/* <button type="button" 
                             className="btn btn-primary"
                             onClick={e => props.editar(avaliacao.id)}>
                                 Editar
-                    </button>
+                    </button> */}
                     <button type="button" 
                             className="btn btn-danger" 
                             onClick={e => props.deletar(avaliacao.id)}>
@@ -92,10 +93,13 @@ export default props => {
             </tbody>
         </table>
 
+<<<<<<< HEAD
         <div>
 			<CanvasJSChart options = {options} />
 		</div>
 
+=======
+>>>>>>> 2f62da735e13f6aea126f005a9e22e6ddfc2d74c
         {/* {avaliacoesChart} */}
         </>
     )

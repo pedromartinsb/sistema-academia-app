@@ -14,9 +14,6 @@ import LocalStorageService from '../../app/service/localStorageService'
 
 import * as messages from '../../components/toastr'
 
-import { Dialog } from 'primereact/dialog'
-import { Button } from 'primereact/button'
-
 class ConsultaExercicios extends React.Component {
 
     state = {

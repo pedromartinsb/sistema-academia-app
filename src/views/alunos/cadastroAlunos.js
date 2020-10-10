@@ -186,7 +186,7 @@ class CadastroAlunos extends React.Component {
         this.service.salvarAluno(alunoDTO)
             .then( response => {
                 mensagemSucesso('Aluno cadastrado com sucesso! Faça o login para acessar o sistema.')
-                this.props.history.push('/login')
+                this.props.history.push('/consulta-alunos')
             }).catch( error => {
                 mensagemErro(error.response.data)
             });

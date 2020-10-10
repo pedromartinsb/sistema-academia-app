@@ -14,10 +14,10 @@ function NavbarInstrutor() {
                 <div className="collapse navbar-collapse" id="navbarResponsive">
                     <ul className="navbar-nav">
                         <NavbarItem href="#/home" label="Home" />
-                        <NavbarItem href="#/cadastro-alunos" label="Alunos" />
-                        <NavbarItem href="#/cadastro-instrutores" label="Instrutores" />
-                        <NavbarItem href="#/cadastro-avaliacoes" label="Avaliação Física" />
-                        <NavbarItem href="#/cadastro-treinos" label="Treinos" />
+                        <NavbarItem href="#/consulta-alunos" label="Alunos" />
+                        <NavbarItem href="#/consulta-instrutores" label="Instrutores" />
+                        <NavbarItem href="#/consulta-avaliacoes" label="Avaliação Física" />
+                        <NavbarItem href="#/consulta-treinos" label="Treinos" />
                         <NavbarItem href="#/cadastro-exercicios" label="Exercícios" />
                         <NavbarItem href="#/login" label="Logout" />
                     </ul>

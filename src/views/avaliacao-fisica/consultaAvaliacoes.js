@@ -39,6 +39,9 @@ class ConsultaAvaliacoes extends React.Component {
         if (usuarioLogado == null) {
             messages.mensagemAlerta('Por favor logar para acessar o sistema.')
             this.props.history.push('/login')
+        } else if(usuarioLogado.tipoUsuario === 1) {
+            this.consultarAlunoLogado(usuarioLogado.id)
+            console.log(this.consultarAlunoLogado(usuarioLogado.id))
         }  else {
             this.buscarTodosAlunos()
         }        
@@ -81,6 +84,10 @@ class ConsultaAvaliacoes extends React.Component {
         this.setState({ showConfirmDialog: false, avaliacaoDeletar: {} })
     }
 
+    cadastrar = () => {
+        this.props.history.push('/cadastro-avaliacoes')
+    }
+
     deletar = () => {
         this.service
             .deletar(this.state.avaliacaoDeletar.id)
@@ -92,6 +99,23 @@ class ConsultaAvaliacoes extends React.Component {
                 messages.mensagemSucesso('Lançamento deletado com sucesso.')
             }).catch( error => {
                 messages.mensagemErro('Erro ao tentar deletar o Lançamento.')
+            })
+    }
+
+    consultarAlunoLogado = (id) => {
+        this.alunoService
+            .buscarPorIdUsuario(id)
+            .then( resposta => {
+                console.log(resposta.data[0].id)
+                 this.avaliacaoService
+                     .consultarPorAluno(resposta.data[0].id)
+                     .then( resposta => {
+                         this.setState({ avaliacoes: resposta.data})
+                     }).catch( error => {
+                         console.log(error)
+                     })
+            }).catch( error => {
+                console.log(error)
             })
     }
 
@@ -122,19 +146,6 @@ class ConsultaAvaliacoes extends React.Component {
                     <NavbarAluno />
                     <Card title="Consulta Avaliações Físicas">
                         <div className="row">
-                            <div className="col-md-6">
-                                <div className="bs-component">
-                                    <FormGroup htmlFor="inputAlunos" label="Alunos: *">
-                                        <SelectMenu id="inputAlunos" className="form-control" lista={alunos} onChange={e => this.setState({aluno: e.target.value})} />
-                                    </FormGroup>
-        
-                                    <button onClick={this.buscar} type="button" className="btn btn-success">Buscar</button>
-                                </div>
-                            </div>
-                        </div>
-        
-                        <br />
-                        <div className="row">
                             <div className="col-md-12">
                                 <div className="bs-component">
                                     <AvaliacoesTables avaliacoes={this.state.avaliacoes} 
@@ -159,51 +170,48 @@ class ConsultaAvaliacoes extends React.Component {
                 )
             }
 
-        } else {
-            return (
-                <>
-                <NavbarInstrutor />
-                <Card title="Consulta Avaliações Físicas">
-                    <div className="row">
-                        <div className="col-md-6">
-                            <div className="bs-component">
-                                <FormGroup htmlFor="inputAlunos" label="Alunos: *">
-                                    <SelectMenu id="inputAlunos" className="form-control" lista={alunos} onChange={e => this.setState({aluno: e.target.value})} />
-                                </FormGroup>
-    
-                                <button onClick={this.buscar} type="button" className="btn btn-success">Buscar</button>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <br />
-                    <div className="row">
-                        <div className="col-md-12">
-                            <div className="bs-component">
-                                <AvaliacoesTables avaliacoes={this.state.avaliacoes} 
-                                                   deletar={this.abrirConfirmacao}
-                                                   editar={this.editar} />
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div>
-                        <Dialog header="Confirmação"
-                                visible={this.state.showConfirmDialog}
-                                style={{width: '50vw'}}
-                                footer={confirmDialogFooter}
-                                modal={true}
-                                onHide={() => this.setState({visible: false})}>
-                            Confirma a exclusão da Avaliação Física?
-                        </Dialog>
-                    </div>
-                </Card>
-                </>
-            )
         }
-
+        
         return (
-            <></>
+            <>
+            <NavbarInstrutor />
+            <Card title="Consulta Avaliações Físicas">
+                <div className="row">
+                    <div className="col-md-6">
+                        <div className="bs-component">
+                            <FormGroup htmlFor="inputAlunos" label="Alunos: *">
+                                <SelectMenu id="inputAlunos" className="form-control" lista={alunos} onChange={e => this.setState({aluno: e.target.value})} />
+                            </FormGroup>
+
+                            <button onClick={this.buscar} type="button" className="btn btn-danger">Buscar</button>
+                            <button onClick={this.cadastrar} type="button" className="btn btn-success">Cadastrar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="bs-component">
+                            <AvaliacoesTables avaliacoes={this.state.avaliacoes} 
+                                               deletar={this.abrirConfirmacao}
+                                               editar={this.editar} />
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <Dialog header="Confirmação"
+                            visible={this.state.showConfirmDialog}
+                            style={{width: '50vw'}}
+                            footer={confirmDialogFooter}
+                            modal={true}
+                            onHide={() => this.setState({visible: false})}>
+                        Confirma a exclusão da Avaliação Física?
+                    </Dialog>
+                </div>
+            </Card>
+            </>
         )
     }
 }
