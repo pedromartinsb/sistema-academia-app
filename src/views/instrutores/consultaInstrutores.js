@@ -54,8 +54,10 @@ class ConsultaInstrutores extends React.Component {
             })
     }
 
-    editar = (id) => {
-        console.log(id)
+    editar = (instrutor) => {
+        console.log(instrutor)
+        LocalStorageService.adicionarItem('_instrutor_logado', instrutor)
+        this.props.history.push('/detalhes-instrutor')
     }
 
     abrirConfirmacao = (instrutor) => {

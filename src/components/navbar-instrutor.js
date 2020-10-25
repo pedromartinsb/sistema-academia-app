@@ -18,7 +18,7 @@ function NavbarInstrutor() {
                         <NavbarItem href="#/consulta-instrutores" label="Instrutores" />
                         <NavbarItem href="#/consulta-avaliacoes" label="Avaliação Física" />
                         <NavbarItem href="#/consulta-treinos" label="Treinos" />
-                        <NavbarItem href="#/cadastro-exercicios" label="Exercícios" />
+                        <NavbarItem href="#/consulta-exercicios" label="Exercícios" />
                         <NavbarItem href="#/login" label="Logout" />
                     </ul>
                 </div>

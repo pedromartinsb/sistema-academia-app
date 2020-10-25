@@ -2,22 +2,23 @@ import React from 'react'
 
 export default props => {
 
-    const rows = props.alunos.map( aluno => {
+    const rows = props.exercicios.map( exercicio => {
         return (
-            <tr key={aluno.id}>
-                <td>{aluno.nome}</td>
-                <td>{aluno.email}</td>
-                <td>{aluno.cpf}</td>
-                <td>{aluno.rg}</td>
+            <tr key={exercicio.id}>
+                <td>{exercicio.nome}</td>
+                <td>{exercicio.dica}</td>
+                <td>{exercicio.repeticoes}</td>
+                <td>{exercicio.series}</td>
+                <td>{exercicio.carga}</td>
                 <td>
                     <button type="button" 
                             className="btn btn-primary"
-                            onClick={e => props.editar(aluno)}>
+                            onClick={e => props.editar(exercicio)}>
                                 Editar
                     </button>
                     <button type="button" 
                             className="btn btn-danger" 
-                            onClick={e => props.deletar(aluno)}>
+                            onClick={e => props.deletar(exercicio.id)}>
                                 Deletar
                     </button>
                 </td>
@@ -30,9 +31,10 @@ export default props => {
             <thead>
                 <tr>
                     <th scope="col">Nome</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">CPF</th>
-                    <th scope="col">RG</th>
+                    <th scope="col">Dica</th>
+                    <th scope="col">Repetições</th>
+                    <th scope="col">Séries</th>
+                    <th scope="col">Carga</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>

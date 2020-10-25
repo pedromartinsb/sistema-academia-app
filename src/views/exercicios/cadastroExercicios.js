@@ -58,6 +58,10 @@ class CadastroExercicios extends React.Component {
     validar() {
         const msgs = []
 
+        if(!this.state.treino) {
+            msgs.push('O campo Treino é obrigatório.')
+        }
+
         if(!this.state.nome) {
             msgs.push('O campo Nome é obrigatório.')
         }

@@ -71,8 +71,8 @@ class ConsultaAlunos extends React.Component {
             })
     }
 
-    editar = (id) => {
-        console.log(id)
+    editar = (aluno) => {
+        console.log(aluno)
     }
 
     abrirConfirmacao = (aluno) => {
@@ -149,6 +149,7 @@ class ConsultaAlunos extends React.Component {
                             visible={this.state.showConfirmDialog}
                             style={{width: '50vw'}}
                             footer={confirmDialogFooter}
+                            closeOnEscape={true}
                             modal={true}
                             onHide={() => this.setState({visible: false})}>
                         Confirma a exclusão do Aluno?

@@ -9,11 +9,11 @@ export default props => {
                 <td>{instrutor.telefone}</td>
                 <td>{instrutor.dataAdmissao[2]}/{instrutor.dataAdmissao[1]}/{instrutor.dataAdmissao[0]}</td>
                 <td>
-                    {/* <button type="button" 
+                    <button type="button" 
                             className="btn btn-primary"
-                            onClick={e => props.editar(instrutor.id)}>
+                            onClick={e => props.editar(instrutor)}>
                                 Editar
-                    </button> */}
+                    </button>
                     <button type="button" 
                             className="btn btn-danger" 
                             onClick={e => props.deletar(instrutor)}>

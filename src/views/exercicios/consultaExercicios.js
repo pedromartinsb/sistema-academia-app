@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom'
 import Card from '../../components/card'
 import FormGroup from '../../components/form-group'
 import SelectMenu from '../../components/selectMenu'
-import NavbarInstrutor from '../../components/navbar-instrutor'
 import NavbarAluno from '../../components/navbar-aluno'
 import ExerciciosTable from './exerciciosTable'
 
@@ -13,6 +12,11 @@ import ExercicioService from '../../app/service/exercicioService'
 import LocalStorageService from '../../app/service/localStorageService'
 
 import * as messages from '../../components/toastr'
+import NavbarInstrutor from '../../components/navbar-instrutor'
+import ExerciciosTableInstrutor from './exerciciosTableInstrutor'
+
+import { Dialog } from 'primereact/dialog'
+import { Button } from 'primereact/button'
 
 class ConsultaExercicios extends React.Component {
 
@@ -23,7 +27,7 @@ class ConsultaExercicios extends React.Component {
         treinosInstrutor: [],
         treinoInstrutor: '',
         showConfirmDialog: false,
-        treinoDeletar: {}
+        exercicioDeletar: {}
     }
 
     constructor() {
@@ -39,10 +43,9 @@ class ConsultaExercicios extends React.Component {
             messages.mensagemAlerta('Por favor logar para acessar o sistema.')
             this.props.history.push('/login')
         } else if (usuarioLogado.tipoUsuario === 1) {
-            this.buscarTodosTreinos(usuarioLogado.id)
+            this.buscarTodosTreinosPorAluno(usuarioLogado.id)
         } else if (usuarioLogado.tipoUsuario === 2) {
-            messages.mensagemAlerta('Você não tem permissão para acessar essa página.')
-            this.props.history.push('/home')
+            this.buscarTodosTreinos()
         }       
     }
 
@@ -50,11 +53,21 @@ class ConsultaExercicios extends React.Component {
         this.props.history.push('/cadastro-exercicios')
     }
 
-    buscarTodosTreinos = (aluno) => {
+    buscarTodosTreinosPorAluno = (aluno) => {
         this.treinoService
             .consultarPorAluno(aluno)
             .then( resposta => {
                 this.setState({ treinosAluno: resposta.data})
+            }).catch( error => {
+                console.log(error)
+            })
+    }
+
+    buscarTodosTreinos = () => {
+        this.exercicioService
+            .buscarTodos()
+            .then( resposta => {
+                this.setState({ exercicios: resposta.data}) 
             }).catch( error => {
                 console.log(error)
             })
@@ -73,16 +86,16 @@ class ConsultaExercicios extends React.Component {
     }
 
     deletar = () => {
-        this.treinoService
-            .deletar(this.state.treinoDeletar.id)
+        this.exercicioService
+            .deletar(this.state.exercicioDeletar)
             .then( response => {
-                const treinos = this.state.treinos
-                const index = treinos.indexOf(this.state.treinoDeletar)
-                treinos.splice(index, 1)
-                this.setState({ treinos: treinos, showConfirmDialog: false })
-                messages.mensagemSucesso('Treino deletado com sucesso.')
+                const exercicios = this.state.exercicios
+                const index = exercicios.indexOf(this.state.exercicioDeletar)
+                exercicios.splice(index, 1)
+                this.setState({ exercicios: exercicios, showConfirmDialog: false })
+                messages.mensagemSucesso('Exercício deletado com sucesso.')
             }).catch( error => {
-                messages.mensagemErro('Erro ao tentar deletar o Treino.')
+                messages.mensagemErro('Erro ao tentar deletar o Exercício.')
             })
     }
 
@@ -101,7 +114,27 @@ class ConsultaExercicios extends React.Component {
             })
     }
 
+    abrirConfirmacao = (exercicio) => {
+        this.setState({ showConfirmDialog: true, exercicioDeletar: exercicio })
+    }
+
+    cancelarDelecao = () => {
+        this.setState({ showConfirmDialog: false, exercicioDeletar: {} })
+    }
+
+    editar = (exercicio) => {
+        console.log(exercicio)
+    }
+
     render() {
+        const usuarioLogado = LocalStorageService.obterItem('_usuario_logado')
+
+        const confirmDialogFooter = (
+            <div>
+                <Button label="Confirmar" icon="pi pi-check" onClick={this.deletar} />
+                <Button label="Cancelar" icon="pi pi-times" onClick={this.cancelarDelecao} />
+            </div>
+        );
 
         const treinos = [
             { label: 'Selecione...', value: '' }
@@ -113,34 +146,70 @@ class ConsultaExercicios extends React.Component {
             )
         });
 
-        return (
-            <>
-            <NavbarAluno />
-            <Card title="Consulta Exercícios">
-                <div className="row">
-                    <div className="col-md-6">
-                        <div className="bs-component">
-                            <FormGroup htmlFor="inputTreinos" label="Treinos: *">
-                                <SelectMenu id="inputTreinos" className="form-control" lista={treinos} onChange={e => this.setState({treinoAluno: e.target.value})} />
-                            </FormGroup>
-
-                            <button onClick={this.buscar} type="button" className="btn btn-success">Buscar</button>
+        if (usuarioLogado !== null) {
+            if (usuarioLogado.tipoUsuario === 2) {
+                return (
+                    <>
+                    <NavbarInstrutor />
+                    <Card title="Consulta Exercícios">
+                        <br />
+                        <br />
+                        <div className="row">
+                            <div className="col-md-12">
+                                <div className="bs-component">
+                                    <ExerciciosTableInstrutor exercicios={this.state.exercicios} 
+                                                              editar={this.editar}
+                                                              deletar={this.abrirConfirmacao} />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-                <br />
-                <br />
-                <div className="row">
-                    <div className="col-md-12">
-                        <div className="bs-component">
-                            <ExerciciosTable exercicios={this.state.exercicios} />
+                        <div>
+                            <Dialog header="Confirmação"
+                                    visible={this.state.showConfirmDialog}
+                                    style={{width: '50vw'}}
+                                    footer={confirmDialogFooter}
+                                    closeOnEscape={true}
+                                    modal={true}
+                                    onHide={() => this.setState({visible: false})}>
+                                Confirma a exclusão do Exercício?
+                            </Dialog>
                         </div>
-                    </div>
-                </div>
-            </Card>
-            </>
-        )
+                    </Card>
+                    </>
+                )
+            } else {
+                return (
+                    <>
+                    <NavbarAluno />
+                    <Card title="Consulta Exercícios">
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="bs-component">
+                                    <FormGroup htmlFor="inputTreinos" label="Treinos: *">
+                                        <SelectMenu id="inputTreinos" className="form-control" lista={treinos} onChange={e => this.setState({treinoAluno: e.target.value})} />
+                                    </FormGroup>
+        
+                                    <button onClick={this.buscar} type="button" className="btn btn-success">Buscar</button>
+                                    <button onClick={this.buscarTodosTreinos} type="button" className="btn btn-primary">Buscar Todos</button>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <br />
+                        <br />
+                        <div className="row">
+                            <div className="col-md-12">
+                                <div className="bs-component">
+                                    <ExerciciosTable exercicios={this.state.exercicios} />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+                    </>
+                )
+            }
+        }
 
     }
 }

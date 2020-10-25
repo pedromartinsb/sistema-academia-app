@@ -22,6 +22,10 @@ class UsuarioService extends ApiService {
         return this.post('/instrutores', instrutorDTO)
     }
 
+    editarAluno(alunoDTO) {
+        return this.put('/alunos', alunoDTO)
+    }
+
 }
 
 export default UsuarioService;

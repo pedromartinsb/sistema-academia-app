@@ -17,4 +17,8 @@ export default class ExercicioService extends ApiService {
     consultarPorTreino(treino) {
         return this.get(`/treino/${treino}`)
     }
+
+    deletar(id) {
+        return this.delete(`/${id}`)
+    }
 }

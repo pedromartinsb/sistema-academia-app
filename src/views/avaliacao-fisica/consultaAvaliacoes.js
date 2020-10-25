@@ -72,8 +72,8 @@ class ConsultaAvaliacoes extends React.Component {
             })
     }
 
-    editar = (id) => {
-        console.log(id)
+    visualizar = (avaliacao) => {
+        console.log(avaliacao)
     }
 
     abrirConfirmacao = (avaliacao) => {
@@ -89,16 +89,16 @@ class ConsultaAvaliacoes extends React.Component {
     }
 
     deletar = () => {
-        this.service
-            .deletar(this.state.avaliacaoDeletar.id)
+        this.avaliacaoService
+            .deletar(this.state.avaliacaoDeletar)
             .then( response => {
-                const lancamentos = this.state.lancamentos
-                const index = lancamentos.indexOf(this.state.lancamentoDeletar)
-                lancamentos.splice(index, 1)
-                this.setState({ lancamentos: lancamentos, showConfirmDialog: false })
-                messages.mensagemSucesso('Lançamento deletado com sucesso.')
+                const avaliacoes = this.state.avaliacoes
+                const index = avaliacoes.indexOf(this.state.avaliacaoDeletar)
+                avaliacoes.splice(index, 1)
+                this.setState({ avaliacoes: avaliacoes, showConfirmDialog: false })
+                messages.mensagemSucesso('Avaliação deletada com sucesso.')
             }).catch( error => {
-                messages.mensagemErro('Erro ao tentar deletar o Lançamento.')
+                messages.mensagemErro('Erro ao tentar deletar a Avaliação.')
             })
     }
 
@@ -195,7 +195,7 @@ class ConsultaAvaliacoes extends React.Component {
                         <div className="bs-component">
                             <AvaliacoesTables avaliacoes={this.state.avaliacoes} 
                                                deletar={this.abrirConfirmacao}
-                                               editar={this.editar} />
+                                               visualizar={this.visualizar} />
                         </div>
                     </div>
                 </div>
