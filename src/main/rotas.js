@@ -8,6 +8,7 @@ import CadastroInstrutores from '../views/instrutores/cadastroInstrutores'
 import CadastroAvaliacoes from '../views/avaliacao-fisica/cadastroAvaliacoes'
 import CadastroTreinos from '../views/treinos/cadastroTreino'
 import CadastroExercicios from '../views/exercicios/cadastroExercicios'
+import CadastroExerciciosTreino from '../views/exercicio-treino/cadastroExerciciosTreino'
 
 import ConsultaLancamentos from '../views/lancamentos/consultaLancamentos'
 import ConsultaAlunos from '../views/alunos/consultaAlunos'
@@ -32,6 +33,7 @@ function Rotas() {
                 <Route path="/cadastro-avaliacoes" component={CadastroAvaliacoes} />
                 <Route path="/cadastro-treinos" component={CadastroTreinos} />
                 <Route path="/cadastro-exercicios" component={CadastroExercicios} />
+                <Route path="/cadastro-exercicios-treino" component={CadastroExerciciosTreino} />
 
                 <Route path="/consulta-lancamentos" component={ConsultaLancamentos} />
                 <Route path="/consulta-alunos" component={ConsultaAlunos} />

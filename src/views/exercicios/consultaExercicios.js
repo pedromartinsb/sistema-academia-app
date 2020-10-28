@@ -17,6 +17,8 @@ import ExerciciosTableInstrutor from './exerciciosTableInstrutor'
 
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
+import ExercicioTreinoService from '../../app/service/exercicioTreinoService'
+import GrupoMuscularService from '../../app/service/grupoMuscularService'
 
 class ConsultaExercicios extends React.Component {
 
@@ -27,13 +29,17 @@ class ConsultaExercicios extends React.Component {
         treinosInstrutor: [],
         treinoInstrutor: '',
         showConfirmDialog: false,
-        exercicioDeletar: {}
+        exercicioDeletar: {},
+        grupoMuscular: '',
+        gruposMusculares: []
     }
 
     constructor() {
         super();
         this.treinoService = new TreinoService()
         this.exercicioService = new ExercicioService()
+        this.exercicioTreinoService = new ExercicioTreinoService()
+        this.grupoMuscularService = new GrupoMuscularService()
     }
 
     componentDidMount() {
@@ -44,8 +50,10 @@ class ConsultaExercicios extends React.Component {
             this.props.history.push('/login')
         } else if (usuarioLogado.tipoUsuario === 1) {
             this.buscarTodosTreinosPorAluno(usuarioLogado.id)
+            this.buscarTodosGruposMusculares()
         } else if (usuarioLogado.tipoUsuario === 2) {
             this.buscarTodosTreinos()
+            this.buscarTodosGruposMusculares()
         }       
     }
 
@@ -64,13 +72,49 @@ class ConsultaExercicios extends React.Component {
     }
 
     buscarTodosTreinos = () => {
-        this.exercicioService
+        this.exercicioTreinoService
             .buscarTodos()
+            .then( resposta => {
+                console.log(resposta.data)
+                this.setState({ exercicios: resposta.data}) 
+            }).catch( error => {
+                console.log(error)
+            })
+    }
+
+    buscarTodosGruposMusculares = () => {
+        this.grupoMuscularService
+            .buscarTodos()
+            .then( resposta => {
+                this.setState({ gruposMusculares: resposta.data}) 
+            }).catch( error => {
+                console.log(error)
+            })
+    }
+
+    buscarPorGrupoMuscular = () => {
+        this.exercicioService
+            .consultarPorGrupoMuscular(this.state.grupoMuscular)
             .then( resposta => {
                 this.setState({ exercicios: resposta.data}) 
             }).catch( error => {
                 console.log(error)
             })
+    }
+
+    buscarPorTreino = () => {
+        if(!this.state.treinoAluno) {
+            messages.mensagemErro('O campo Treino é obrigatório.')
+        } else {
+            this.exercicioTreinoService
+            .consultarPorTreino(this.state.treinoAluno)
+            .then( resposta => {
+                console.log(resposta.data)
+                this.setState({ exercicios: resposta.data}) 
+            }).catch( error => {
+                console.log(error)
+            })
+        }
     }
 
     editar = (id) => {
@@ -105,7 +149,7 @@ class ConsultaExercicios extends React.Component {
             return false;
         }
 
-        this.exercicioService
+        this.exercicioTreinoService
             .consultarPorTreino(this.state.treinoAluno)
             .then( resposta => {
                 this.setState({ exercicios: resposta.data})
@@ -124,6 +168,10 @@ class ConsultaExercicios extends React.Component {
 
     editar = (exercicio) => {
         console.log(exercicio)
+    }
+
+    cadastrarNovo = () => {
+        this.props.history.push('/cadastro-exercicios')
     }
 
     render() {
@@ -146,13 +194,30 @@ class ConsultaExercicios extends React.Component {
             )
         });
 
+        const gruposMuscular = [
+            { label: 'Selecione...', value: '' }
+        ]
+
+        this.state.gruposMusculares.map( grupoMuscular => {
+            return (
+                gruposMuscular.push({ label: grupoMuscular.nome, value: grupoMuscular.id })
+            )
+        });
+
         if (usuarioLogado !== null) {
             if (usuarioLogado.tipoUsuario === 2) {
                 return (
                     <>
                     <NavbarInstrutor />
                     <Card title="Consulta Exercícios">
-                        <br />
+                            <div className="row">
+                            <div className="col-md-12">
+                                <div className="bs-component">
+                                    <button onClick={this.cadastrarNovo} type="button" className="btn btn-primary">Cadastrar Novo</button>
+                                </div>
+                            </div>
+                        </div>
+
                         <br />
                         <div className="row">
                             <div className="col-md-12">
@@ -190,11 +255,25 @@ class ConsultaExercicios extends React.Component {
                                         <SelectMenu id="inputTreinos" className="form-control" lista={treinos} onChange={e => this.setState({treinoAluno: e.target.value})} />
                                     </FormGroup>
         
-                                    <button onClick={this.buscar} type="button" className="btn btn-success">Buscar</button>
+                                    <button onClick={this.buscarPorTreino} type="button" className="btn btn-success">Buscar</button>
                                     <button onClick={this.buscarTodosTreinos} type="button" className="btn btn-primary">Buscar Todos</button>
                                 </div>
                             </div>
                         </div>
+
+                        {/* <br />
+                        <br />
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="bs-component">
+                                    <FormGroup htmlFor="inputGrupoMuscular" label="Grupo Muscular: *">
+                                        <SelectMenu id="inputGrupoMuscular" className="form-control" lista={gruposMuscular} onChange={e => this.setState({grupoMuscular: e.target.value})} />
+                                    </FormGroup>
+        
+                                    <button onClick={this.buscarPorGrupoMuscular} type="button" className="btn btn-success">Buscar</button>
+                                </div>
+                            </div>
+                        </div> */}
         
                         <br />
                         <br />

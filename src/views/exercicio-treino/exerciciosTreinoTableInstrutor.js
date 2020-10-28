@@ -5,8 +5,11 @@ export default props => {
     const rows = props.exercicios.map( exercicio => {
         return (
             <tr key={exercicio.id}>
-                <td>{exercicio.nome}</td>
-                <td>{exercicio.dica}</td>
+                <td>{exercicio.exercicio.nome}</td>
+                <td>{exercicio.exercicio.dica}</td>
+                <td>{exercicio.repeticoes}</td>
+                <td>{exercicio.series}</td>
+                <td>{exercicio.carga}</td>
                 <td>
                     <button type="button" 
                             className="btn btn-primary"
@@ -29,6 +32,9 @@ export default props => {
                 <tr>
                     <th scope="col">Nome</th>
                     <th scope="col">Dica</th>
+                    <th scope="col">Repetições</th>
+                    <th scope="col">Séries</th>
+                    <th scope="col">Carga</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>

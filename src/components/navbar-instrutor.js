@@ -16,9 +16,10 @@ function NavbarInstrutor() {
                         <NavbarItem href="#/home" label="Home" />
                         <NavbarItem href="#/consulta-alunos" label="Alunos" />
                         <NavbarItem href="#/consulta-instrutores" label="Instrutores" />
-                        <NavbarItem href="#/consulta-avaliacoes" label="Avaliação Física" />
                         <NavbarItem href="#/consulta-treinos" label="Treinos" />
                         <NavbarItem href="#/consulta-exercicios" label="Exercícios" />
+                        <NavbarItem href="#/consulta-avaliacoes" label="Avaliação Física" />
+                        <NavbarItem href="#/cadastro-exercicios-treino" label="Exercícios Treino" />
                         <NavbarItem href="#/login" label="Logout" />
                     </ul>
                 </div>

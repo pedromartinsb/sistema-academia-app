@@ -6,28 +6,24 @@ import FormGroup from '../../components/form-group'
 import SelectMenu from '../../components/selectMenu'
 import NavbarInstrutor from '../../components/navbar-instrutor'
 
-import TreinoService from '../../app/service/treinoService'
 import ExercicioService from '../../app/service/exercicioService'
 import LocalStorageService from '../../app/service/localStorageService'
 
 import { mensagemSucesso, mensagemErro, mensagemAlerta } from '../../components/toastr'
+import GrupoMuscularService from '../../app/service/grupoMuscularService'
 
 class CadastroExercicios extends React.Component {
 
     state = {
-        treinos: [],
-        treino: '',
-        nome: '',
-        dica: '',
+        gruposMusculares: [],
         grupoMuscular: '',
-        repeticoes: '',
-        carga: '',
-        series: ''
+        nome: '',
+        dica: ''
     }
 
     constructor() {
         super()
-        this.treinoService = new TreinoService()
+        this.grupoMuscularService = new GrupoMuscularService()
         this.exercicioService = new ExercicioService()
     }
 
@@ -41,15 +37,15 @@ class CadastroExercicios extends React.Component {
             mensagemAlerta('Você não tem permissão para acessar essa tela.')
             this.props.history.push('/home')
         } else {
-            this.buscarTodosTreinos()
+            this.buscarTodosGruposMusculares()
         }     
     }
 
-    buscarTodosTreinos = () => {
-        this.treinoService
+    buscarTodosGruposMusculares = () => {
+        this.grupoMuscularService
             .buscarTodos()
             .then( resposta => {
-                this.setState({ treinos: resposta.data})
+                this.setState({ gruposMusculares: resposta.data})
             }).catch( error => {
                 console.log(error)
             })
@@ -58,8 +54,8 @@ class CadastroExercicios extends React.Component {
     validar() {
         const msgs = []
 
-        if(!this.state.treino) {
-            msgs.push('O campo Treino é obrigatório.')
+        if(!this.state.grupoMuscular) {
+            msgs.push('O campo Grupo Muscular é obrigatório.')
         }
 
         if(!this.state.nome) {
@@ -68,22 +64,6 @@ class CadastroExercicios extends React.Component {
 
         if(!this.state.dica) {
             msgs.push('O campo Dica é obrigatório.')
-        }
-
-        if(!this.state.grupoMuscular) {
-            msgs.push('O campo Grupo Muscular é obrigatório.')
-        }
-
-        if(!this.state.repeticoes) {
-            msgs.push('O campo Repetições é obrigatório.')
-        }
-
-        if(!this.state.carga) {
-            msgs.push('O campo Carga é obrigatório.')
-        }
-
-        if(!this.state.series) {
-            msgs.push('O campo Series é obrigatório.')
         }
 
         return msgs
@@ -101,12 +81,8 @@ class CadastroExercicios extends React.Component {
 
         const exercicioDTO = {
             nome: this.state.nome,
-            treino: this.state.treino,
             dica: this.state.dica,
-            grupoMuscular: this.state.grupoMuscular,
-            repeticoes: this.state.repeticoes,
-            carga: this.state.carga,
-            series: this.state.series
+            grupoMuscular: this.state.grupoMuscular
         }
 
         this.exercicioService.salvar(exercicioDTO)
@@ -122,15 +98,19 @@ class CadastroExercicios extends React.Component {
         this.props.history.push('/home')
     }
 
+    consultarExercicios = () => {
+        this.props.history.push('/consulta-exercicios')
+    }
+
     render() {
 
-        const treinos = [
+        const gruposMusculares = [
             { label: 'Selecione...', value: '' }
         ]
 
-        this.state.treinos.map( treino => {
+        this.state.gruposMusculares.map( grupoMuscular => {
             return (
-                treinos.push({ label: treino.nome, value: treino.id })
+                gruposMusculares.push({ label: grupoMuscular.nome, value: grupoMuscular.id })
             )
         });
 
@@ -141,8 +121,12 @@ class CadastroExercicios extends React.Component {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="bs-component">
-                            <FormGroup htmlFor="inputTreinos" label="Treinos: *">
-                                <SelectMenu id="inputTreinos" className="form-control" lista={treinos} onChange={e => this.setState({treino: e.target.value})} />
+                            <button onClick={this.consultarExercicios} type="button" className="btn btn-primary">Consultar Exercícios</button>
+
+                            <br />
+                            <br />
+                            <FormGroup htmlFor="inputGruposMusculares" label="Grupos Musculares: *">
+                                <SelectMenu id="inputGruposMusculares" className="form-control" lista={gruposMusculares} onChange={e => this.setState({grupoMuscular: e.target.value})} />
                             </FormGroup>
 
                             <FormGroup label="Nome: *" htmlFor="inputNome">
@@ -161,38 +145,6 @@ class CadastroExercicios extends React.Component {
                                         name="dica" 
                                         placeholder="Ex.: Descer até angulo de 90º" 
                                         onChange={e => this.setState({dica: e.target.value})} />
-                            </FormGroup>
-
-                            <FormGroup label="Grupo Muscular: *" htmlFor="inputGrupoMuscular">
-                                <input type="text" 
-                                        id="inputGrupoMuscular" 
-                                        className="form-control" 
-                                        name="grupoMuscular" 
-                                        onChange={e => this.setState({grupoMuscular: e.target.value})} />
-                            </FormGroup>
-
-                            <FormGroup label="Repetições: *" htmlFor="inputRepeticoes">
-                                <input type="number" 
-                                        id="inputRepeticoes" 
-                                        className="form-control" 
-                                        name="repeticoes" 
-                                        onChange={e => this.setState({repeticoes: e.target.value})} />
-                            </FormGroup>
-
-                            <FormGroup label="Carga: *" htmlFor="inputCarga">
-                                <input type="number" 
-                                        id="inputCarga" 
-                                        className="form-control" 
-                                        name="carga" 
-                                        onChange={e => this.setState({carga: e.target.value})} />
-                            </FormGroup>
-
-                            <FormGroup label="Séries: *" htmlFor="inputSeries">
-                                <input type="number" 
-                                        id="inputSeries" 
-                                        className="form-control" 
-                                        name="series" 
-                                        onChange={e => this.setState({series: e.target.value})} />
                             </FormGroup>
 
                             <button onClick={this.cadastrar} type="button" className="btn btn-success">Salvar</button>
