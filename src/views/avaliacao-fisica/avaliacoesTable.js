@@ -3,19 +3,24 @@ import { Chart } from "react-google-charts"
 
 export default props => {
 
+    // const data = [
+    //     [
+    //         { type: 'number', label: 'data' },
+    //         { type: 'number', label: 'peso' },
+    //         { type: 'number', label: 'gordura corporal' }
+    //     ],
+    // ];
+
     const data = [
-        [
-            { type: 'number', label: 'id' },
-            { type: 'number', label: 'peso' },
-            { type: 'number', label: 'gordura corporal' }
-        ],
-    ];
+        ['dia', 'peso', 'gordura'],
+        [0, 0, 0]
+    ]
 
     var i = 1
 
     const rows = props.avaliacoes.map( avaliacao => {
 
-        data.push([i, avaliacao.desempenho.peso, avaliacao.desempenho.gorduraCorporal])
+        data.push([avaliacao.dataAvaliacao[2], parseInt(avaliacao.desempenho.peso), parseInt(avaliacao.desempenho.gorduraCorporal)])
         i = i + 1
 
         return (
@@ -62,7 +67,7 @@ export default props => {
             </tbody>
         </table>
 
-        <Chart
+        {/* <Chart
             width="100%"
             height="600px"
             chartType="AreaChart"
@@ -71,9 +76,31 @@ export default props => {
             options={{
             title:
             'Comparação Peso x Gordura',
+            hAxis: { title: 'Gordura' },
+            vAxis: { title: 'Peso' },
             intervals: { style: 'sticks' },
             legend: 'none',
             }}
+        /> */}
+
+        <Chart
+        width="100%"
+        height="600px"
+        chartType="LineChart"
+        loader={<div>Loading Chart</div>}
+        data={data}
+        options={{
+            hAxis: {
+                title: 'Gordura',
+            },
+            vAxis: {
+                title: 'Peso',
+            },
+            series: {
+                1: { curveType: 'function' },
+            },
+        }}
+        rootProps={{ 'data-testid': '2' }}
         />
         </>
     )
