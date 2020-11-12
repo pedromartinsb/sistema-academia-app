@@ -73,6 +73,8 @@ export default props => {
             'Comparação Peso x Gordura',
             intervals: { style: 'sticks' },
             legend: 'none',
+            hAxis: { title: 'Meses', titleTextStyle: { color: '#333' } },
+            vAxis: { title: 'Pesos', titleTextStyle: { color: '#333' } },
             }}
         />
         </>

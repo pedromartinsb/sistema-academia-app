@@ -16,9 +16,12 @@ function NavbarAluno() {
                         <NavbarItem href="#/home" label="Home" />
                         <NavbarItem href="#/consulta-avaliacoes" label="Minhas Avaliações" />
                         <NavbarItem href="#/consulta-exercicios" label="Meus Exercícios" />
-                        <NavbarItem href="#/login" label="Logout" />
                     </ul>
                 </div>
+                <a href="#/login" className="navbar-brand">Logout</a>
+                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                     <span className="navbar-toggler-icon"></span>
+                 </button>
             </div>
         </div>
     )

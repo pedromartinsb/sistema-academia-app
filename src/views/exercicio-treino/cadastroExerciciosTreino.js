@@ -107,14 +107,14 @@ class CadastroExerciciosTreino extends React.Component {
             exercicio: this.state.exercicio,
             treino: this.state.treino,
             carga: this.state.carga,
-            serie: this.state.serie,
+            series: this.state.series,
             repeticoes: this.state.repeticoes
         }
 
         this.exercicioTreinoService.salvar(exercicioDTO)
             .then( response => {
+                window.location.reload(false);
                 mensagemSucesso('Exercício Treino cadastrado com sucesso!')
-                this.props.history.push('/home')
             }).catch( error => {
                 mensagemErro(error.response.data)
             });
@@ -122,6 +122,14 @@ class CadastroExerciciosTreino extends React.Component {
 
     cancelar = () => {
         this.props.history.push('/home')
+    }
+
+    consultarExercicios = () => {
+        this.props.history.push('/consulta-exercicios')
+    }
+
+    consultarTreinos = () => {
+        this.props.history.push('/consulta-treinos')
     }
 
     render() {
@@ -153,6 +161,11 @@ class CadastroExerciciosTreino extends React.Component {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="bs-component">
+                            <button onClick={this.consultarExercicios} type="button" className="btn btn-secondary">Consultar Exercícios</button>
+                            <button onClick={this.consultarTreinos} type="button" className="btn btn-primary">Consultar Treinos</button>
+
+                            <br />
+                            <br />
                             <FormGroup htmlFor="inputTreinos" label="Treinos: *">
                                 <SelectMenu id="inputTreinos" className="form-control" lista={treinos} onChange={e => this.setState({treino: e.target.value})} />
                             </FormGroup>
@@ -186,7 +199,7 @@ class CadastroExerciciosTreino extends React.Component {
                             </FormGroup>
 
                             <button onClick={this.cadastrar} type="button" className="btn btn-success">Salvar</button>
-                            <button onClick={this.cancelar} type="button" className="btn btn-danger">Cacelar</button>
+                            <button onClick={this.cancelar} type="button" className="btn btn-danger">Cancelar</button>
                         </div>
                     </div>
                 </div>

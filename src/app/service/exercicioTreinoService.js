@@ -14,6 +14,10 @@ export default class ExercicioTreinoService extends ApiService {
         return this.get(`/${treino}/treino`)
     }
 
+    consultarPorExercicio(grupoMuscular) {
+        return this.get(`/${grupoMuscular}/exercicio`)
+    }
+
     salvar(exercicioTreinoDTO) {
         return this.post('', exercicioTreinoDTO)
     }
