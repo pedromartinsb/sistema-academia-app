@@ -80,6 +80,7 @@ class ConsultaTreinos extends React.Component {
         this.treinoService
             .consultarPorAluno(this.state.aluno)
             .then( resposta => {
+                console.log(resposta.data)
                 this.setState({ treinos: resposta.data})
             }).catch( error => {
                 console.log(error)

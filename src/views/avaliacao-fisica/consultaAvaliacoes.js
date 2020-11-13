@@ -183,8 +183,8 @@ class ConsultaAvaliacoes extends React.Component {
                                 <SelectMenu id="inputAlunos" className="form-control" lista={alunos} onChange={e => this.setState({aluno: e.target.value})} />
                             </FormGroup>
 
-                            <button onClick={this.buscar} type="button" className="btn btn-danger">Buscar</button>
-                            <button onClick={this.cadastrar} type="button" className="btn btn-success">Cadastrar</button>
+                            <button onClick={this.buscar} type="button" className="btn btn-secondary">Buscar</button>
+                            <button onClick={this.cadastrar} type="button" className="btn btn-primary">Cadastrar</button>
                         </div>
                     </div>
                 </div>

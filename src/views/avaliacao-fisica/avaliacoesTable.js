@@ -80,6 +80,8 @@ export default props => {
             vAxis: { title: 'Peso' },
             intervals: { style: 'sticks' },
             legend: 'none',
+            hAxis: { title: 'Meses', titleTextStyle: { color: '#333' } },
+            vAxis: { title: 'Pesos', titleTextStyle: { color: '#333' } },
             }}
         /> */}
 
