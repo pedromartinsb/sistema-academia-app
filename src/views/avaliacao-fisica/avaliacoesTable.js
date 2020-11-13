@@ -1,15 +1,18 @@
 import React from 'react'
 import { Chart } from "react-google-charts"
+import Modal from '@material-ui/core/Modal'
 
 export default props => {
 
-    // const data = [
-    //     [
-    //         { type: 'number', label: 'data' },
-    //         { type: 'number', label: 'peso' },
-    //         { type: 'number', label: 'gordura corporal' }
-    //     ],
-    // ];
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const data = [
         ['dia', 'peso', 'gordura'],
@@ -66,24 +69,6 @@ export default props => {
                 {rows}
             </tbody>
         </table>
-
-        {/* <Chart
-            width="100%"
-            height="600px"
-            chartType="AreaChart"
-            loader={<div>Carregando gráfico</div>}
-            data={data}
-            options={{
-            title:
-            'Comparação Peso x Gordura',
-            hAxis: { title: 'Gordura' },
-            vAxis: { title: 'Peso' },
-            intervals: { style: 'sticks' },
-            legend: 'none',
-            hAxis: { title: 'Meses', titleTextStyle: { color: '#333' } },
-            vAxis: { title: 'Pesos', titleTextStyle: { color: '#333' } },
-            }}
-        /> */}
 
         <Chart
         width="100%"

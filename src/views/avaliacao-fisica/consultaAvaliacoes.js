@@ -23,8 +23,19 @@ class ConsultaAvaliacoes extends React.Component {
         alunos : [],
         aluno: '',
         showConfirmDialog: false,
+        showConfirmDados: false,
         avaliacaoDeletar: {},
-        avaliacoes : []
+        avaliacaoSelecionada: '',
+        avaliacoes : [],
+        altura: '',
+        abdomen: '',
+        frequenciaCardiaca: '',
+        gorduraCorporal: '',
+        panturrilha: '',
+        peso: '',
+        pressao: '',
+        quadril: '',
+        torax: ''
     }
 
     constructor() {
@@ -73,7 +84,20 @@ class ConsultaAvaliacoes extends React.Component {
     }
 
     visualizar = (avaliacao) => {
-        console.log(avaliacao)
+        console.log(avaliacao.desempenho.altura)
+        this.setState({
+            avaliador: avaliacao.avaliador,
+            altura: avaliacao.desempenho.altura,
+            abdomen: avaliacao.desempenho.abdomen,
+            frequenciaCardiaca: avaliacao.desempenho.frequenciaCardiaca,
+            gorduraCorporal: avaliacao.desempenho.gorduraCorporal,
+            panturrilha: avaliacao.desempenho.panturrilha,
+            peso: avaliacao.desempenho.peso,
+            pressao: avaliacao.desempenho.pressao,
+            quadril: avaliacao.desempenho.quadril,
+            torax: avaliacao.desempenho.torax
+        })
+        this.setState({ showConfirmDados: true, avaliacaoSelecionada: avaliacao })
     }
 
     abrirConfirmacao = (avaliacao) => {
@@ -82,6 +106,10 @@ class ConsultaAvaliacoes extends React.Component {
 
     cancelarDelecao = () => {
         this.setState({ showConfirmDialog: false, avaliacaoDeletar: {} })
+    }
+
+    cancelarDialogDados = () => {
+        this.setState({ showConfirmDados: false, avaliacaoDeletar: {} })
     }
 
     cadastrar = () => {
@@ -129,6 +157,12 @@ class ConsultaAvaliacoes extends React.Component {
             </div>
         );
 
+        const confirmDadosFooter = (
+            <div>
+                <Button label="Cancelar" icon="pi pi-times" onClick={this.cancelarDialogDados} />
+            </div>
+        );
+
         const alunos = [
             { label: 'Selecione...', value: '' }
         ]
@@ -163,6 +197,22 @@ class ConsultaAvaliacoes extends React.Component {
                                     modal={true}
                                     onHide={() => this.setState({visible: false})}>
                                 Confirma a exclusão da Avaliação Física?
+                            </Dialog>
+                        </div>
+
+                        <div>
+                            <Dialog header="Dados"
+                                    visible={this.state.showConfirmDados}
+                                    style={{width: '50vw'}}
+                                    modal={true}
+                                    footer={confirmDadosFooter}
+                                    onHide={() => this.setState({visible: false})}>
+                                <div>
+                                    <h2 id="simple-modal-title">Dados da Avaliação Física:</h2>
+                                    <p id="simple-modal-description">
+                                        avaliacaoSelecionada.avaliacador
+                                    </p>
+                                </div>
                             </Dialog>
                         </div>
                     </Card>
@@ -208,6 +258,47 @@ class ConsultaAvaliacoes extends React.Component {
                             modal={true}
                             onHide={() => this.setState({visible: false})}>
                         Confirma a exclusão da Avaliação Física?
+                    </Dialog>
+                </div>
+
+                <div>
+                    <Dialog header="Dados da Avaliação Física:"
+                            visible={this.state.showConfirmDados}
+                            style={{width: '50vw'}}
+                            modal={true}
+                            closable={false}
+                            closeOnEscape={true}
+                            footer={confirmDadosFooter}
+                            onHide={() => this.setState({visible: false})}>
+                        <div>
+                            <h4 id="simple-modal-title">
+                                Avaliador: {this.state.avaliador}
+                            </h4>
+                            <h4>
+                                Altura: {this.state.altura}
+                            </h4>
+                            <h4>
+                                Abdomen: {this.state.abdomen}
+                            </h4>
+                            <h4>
+                                Frequência Cardiaca: {this.state.frequenciaCardiaca}
+                            </h4>
+                            <h4>
+                                Gordura Corporal: {this.state.gorduraCorporal}
+                            </h4>
+                            <h4>
+                                Panturrilha: {this.state.panturrilha}
+                            </h4>
+                            <h4>
+                                Peso: {this.state.peso}
+                            </h4>
+                            <h4>
+                                Pressão: {this.state.pressao}
+                            </h4>
+                            <h4>
+                                Quadril: {this.state.quadril}
+                            </h4>
+                        </div>
                     </Dialog>
                 </div>
             </Card>
