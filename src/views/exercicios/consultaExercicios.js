@@ -50,7 +50,8 @@ class ConsultaExercicios extends React.Component {
             messages.mensagemAlerta('Por favor logar para acessar o sistema.')
             this.props.history.push('/login')
         } else if (usuarioLogado.tipoUsuario === 1) {
-            this.buscarTodosExerciciosPorAluno(usuarioLogado.id)
+            // this.buscarTodosExerciciosPorAluno(usuarioLogado.id)
+            this.buscarTodosExerciciosPorUsuario(usuarioLogado.id)
             this.buscarTodosGruposMusculares()
         } else if (usuarioLogado.tipoUsuario === 2) {
             this.buscarTodosExercicios()
@@ -62,9 +63,19 @@ class ConsultaExercicios extends React.Component {
         this.props.history.push('/cadastro-exercicios')
     }
 
-    buscarTodosExerciciosPorAluno = (aluno) => {
+    buscarTodosExerciciosPorAluno = (usuario) => {
         this.treinoService
-            .consultarPorAluno(aluno)
+            .consultarPorAluno(usuario)
+            .then( resposta => {
+                this.setState({ treinosAluno: resposta.data})
+            }).catch( error => {
+                console.log(error)
+            })
+    }
+
+    buscarTodosExerciciosPorUsuario = (aluno) => {
+        this.treinoService
+            .consultarPorUsuario(aluno)
             .then( resposta => {
                 this.setState({ treinosAluno: resposta.data})
             }).catch( error => {
@@ -73,7 +84,7 @@ class ConsultaExercicios extends React.Component {
     }
 
     buscarTodosExercicios = () => {
-        this.exercicioTreinoService
+        this.exercicioService
             .buscarTodos()
             .then( resposta => {
                 console.log(resposta.data)
@@ -93,12 +104,26 @@ class ConsultaExercicios extends React.Component {
             })
     }
 
+    // buscarPorGrupoMuscular = () => {
+    //     if(!this.state.grupoMuscularAluno) {
+    //         messages.mensagemErro('O campo Grupo Muscular é obrigatório.')
+    //     } else {
+    //         this.exercicioTreinoService
+    //         .consultarPorExercicio(this.state.grupoMuscularAluno)
+    //         .then( resposta => {
+    //             this.setState({ exercicios: resposta.data}) 
+    //         }).catch( error => {
+    //             console.log(error)
+    //         })
+    //     }
+    // }
+
     buscarPorGrupoMuscular = () => {
         if(!this.state.grupoMuscularAluno) {
             messages.mensagemErro('O campo Grupo Muscular é obrigatório.')
         } else {
-            this.exercicioTreinoService
-            .consultarPorExercicio(this.state.grupoMuscularAluno)
+            this.exercicioService
+            .consultarPorGrupoMuscular(this.state.grupoMuscularAluno)
             .then( resposta => {
                 this.setState({ exercicios: resposta.data}) 
             }).catch( error => {
@@ -125,9 +150,9 @@ class ConsultaExercicios extends React.Component {
         console.log(id)
     }
 
-    abrirConfirmacao = (treino) => {
-        this.setState({ showConfirmDialog: true, treinoDeletar: treino })
-    }
+    // abrirConfirmacao = (treino) => {
+    //     this.setState({ showConfirmDialog: true, treinoDeletar: treino })
+    // }
 
     cancelarDelecao = () => {
         this.setState({ showConfirmDialog: false, treinoDeletar: {} })
@@ -249,6 +274,7 @@ class ConsultaExercicios extends React.Component {
                                     footer={confirmDialogFooter}
                                     closeOnEscape={true}
                                     modal={true}
+                                    closable={false}
                                     onHide={() => this.setState({visible: false})}>
                                 Confirma a exclusão do Exercício?
                             </Dialog>
@@ -260,7 +286,7 @@ class ConsultaExercicios extends React.Component {
                 return (
                     <>
                     <NavbarAluno />
-                    <Card title="Consulta Exercícios">
+                    <Card title="Consulta Treinos/Exercícios">
                         <div className="row">
                             <div className="col-md-6">
                                 <div className="bs-component">
@@ -269,7 +295,6 @@ class ConsultaExercicios extends React.Component {
                                     </FormGroup>
         
                                     <button onClick={this.buscarPorTreino} type="button" className="btn btn-success">Buscar</button>
-                                    <button onClick={this.buscarTodosExercicios} type="button" className="btn btn-primary">Buscar Todos</button>
                                 </div>
                             </div>
                         </div>

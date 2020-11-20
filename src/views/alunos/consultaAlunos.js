@@ -141,6 +141,7 @@ class ConsultaAlunos extends React.Component {
                             footer={confirmDialogFooter}
                             closeOnEscape={true}
                             modal={true}
+                            closable={false}
                             onHide={() => this.setState({visible: false})}>
                         Confirma a exclusão do Aluno?
                     </Dialog>

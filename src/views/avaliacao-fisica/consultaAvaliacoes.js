@@ -5,6 +5,7 @@ import Card from '../../components/card'
 import FormGroup from '../../components/form-group'
 import SelectMenu from '../../components/selectMenu'
 import AvaliacoesTables from './avaliacoesTable'
+import AvaliacoesTablesAluno from './avaliacoesTableAluno'
 import NavbarInstrutor from '../../components/navbar-instrutor'
 import NavbarAluno from '../../components/navbar-aluno'
 
@@ -84,7 +85,6 @@ class ConsultaAvaliacoes extends React.Component {
     }
 
     visualizar = (avaliacao) => {
-        console.log(avaliacao.desempenho.altura)
         this.setState({
             avaliador: avaliacao.avaliador,
             altura: avaliacao.desempenho.altura,
@@ -134,7 +134,6 @@ class ConsultaAvaliacoes extends React.Component {
         this.alunoService
             .buscarPorIdUsuario(id)
             .then( resposta => {
-                console.log(resposta.data[0].id)
                  this.avaliacaoService
                      .consultarPorAluno(resposta.data[0].id)
                      .then( resposta => {
@@ -182,9 +181,8 @@ class ConsultaAvaliacoes extends React.Component {
                         <div className="row">
                             <div className="col-md-12">
                                 <div className="bs-component">
-                                    <AvaliacoesTables avaliacoes={this.state.avaliacoes} 
-                                                       deletar={this.abrirConfirmacao}
-                                                       editar={this.editar} />
+                                    <AvaliacoesTablesAluno avaliacoes={this.state.avaliacoes} 
+                                                       visualizar={this.visualizar} />
                                 </div>
                             </div>
                         </div>
@@ -212,6 +210,47 @@ class ConsultaAvaliacoes extends React.Component {
                                     <p id="simple-modal-description">
                                         avaliacaoSelecionada.avaliacador
                                     </p>
+                                </div>
+                            </Dialog>
+                        </div>
+
+                        <div>
+                            <Dialog header="Dados da Avaliação Física:"
+                                    visible={this.state.showConfirmDados}
+                                    style={{width: '50vw'}}
+                                    modal={true}
+                                    closable={false}
+                                    closeOnEscape={true}
+                                    footer={confirmDadosFooter}
+                                    onHide={() => this.setState({visible: false})}>
+                                <div>
+                                    <h4 id="simple-modal-title">
+                                        Avaliador: {this.state.avaliador}
+                                    </h4>
+                                    <h4>
+                                        Altura: {this.state.altura}
+                                    </h4>
+                                    <h4>
+                                        Abdomen: {this.state.abdomen}
+                                    </h4>
+                                    <h4>
+                                        Frequência Cardiaca: {this.state.frequenciaCardiaca}
+                                    </h4>
+                                    <h4>
+                                        Gordura Corporal: {this.state.gorduraCorporal}
+                                    </h4>
+                                    <h4>
+                                        Panturrilha: {this.state.panturrilha}
+                                    </h4>
+                                    <h4>
+                                        Peso: {this.state.peso}
+                                    </h4>
+                                    <h4>
+                                        Pressão: {this.state.pressao}
+                                    </h4>
+                                    <h4>
+                                        Quadril: {this.state.quadril}
+                                    </h4>
                                 </div>
                             </Dialog>
                         </div>

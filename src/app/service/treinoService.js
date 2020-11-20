@@ -18,6 +18,10 @@ export default class TreinoService extends ApiService {
         return this.get(`/aluno/${aluno}`)
     }
 
+    consultarPorUsuario(usuario) {
+        return this.get(`/usuario/${usuario}`)
+    }
+
     buscarPorIdUsuario(id) {
         return this.get(`/${id}`)
     }
