@@ -22,8 +22,8 @@ class UsuarioService extends ApiService {
         return this.post('/instrutores', instrutorDTO)
     }
 
-    editarAluno(alunoDTO) {
-        return this.put('/alunos', alunoDTO)
+    editarAluno(id, alunoDTO) {
+        return this.put(`/alunos/${id}`, alunoDTO)
     }
 
 }

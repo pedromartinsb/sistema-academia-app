@@ -14,6 +14,10 @@ export default class AlunoService extends ApiService {
         return this.get(`/${id}/usuarios`)
     }
 
+    editar(id, alunoDTO) {
+        return this.put(`/${id}`, alunoDTO)
+    }
+
     deletar(id) {
         return this.delete(`/${id}`)
     }

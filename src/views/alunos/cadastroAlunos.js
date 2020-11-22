@@ -330,9 +330,9 @@ class CadastroAlunos extends React.Component {
 
                             <FormGroup label="Endereço: *" htmlFor="inputEndereço">
                                 <input type="text" 
-                                        id="inputDataNascimento" 
+                                        id="inputEndereco" 
                                         className="form-control" 
-                                        name="dataNascimento" 
+                                        name="endereco" 
                                         placeholder="Digite um endereço" 
                                         onChange={e => this.setState({endereco: e.target.value})} />
                             </FormGroup>
