@@ -16,9 +16,9 @@ function NavbarInstrutor() {
                          <NavbarItem href="#/consulta-alunos" label="Alunos" />
                          <NavbarItem href="#/consulta-instrutores" label="Instrutores" />
                          <NavbarItem href="#/consulta-avaliacoes" label="Avaliação Física" />
-                         <NavbarItem href="#/cadastro-exercicios-treino" label="Plano de Treino" />
                          <NavbarItem href="#/consulta-exercicios" label="Exercícios" />
                          <NavbarItem href="#/consulta-treinos" label="Treinos" />
+                         <NavbarItem href="#/cadastro-exercicios-treino" label="Plano de Treino" />
                      </ul>
                  </div>
                  <a href="#/login" className="navbar-brand">Logout</a>

@@ -161,11 +161,6 @@ class CadastroExerciciosTreino extends React.Component {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="bs-component">
-                            <button onClick={this.consultarExercicios} type="button" className="btn btn-secondary">Consultar Exercícios</button>
-                            <button onClick={this.consultarTreinos} type="button" className="btn btn-primary">Consultar Treinos</button>
-
-                            <br />
-                            <br />
                             <FormGroup htmlFor="inputTreinos" label="Treinos: *">
                                 <SelectMenu id="inputTreinos" className="form-control" lista={treinos} onChange={e => this.setState({treino: e.target.value})} />
                             </FormGroup>
