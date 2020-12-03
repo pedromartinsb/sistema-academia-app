@@ -13,10 +13,12 @@ function NavbarInstrutor() {
                  </button>
                  <div className="collapse navbar-collapse" id="navbarResponsive">
                      <ul className="navbar-nav">
-                         <NavbarItem href="#/consulta-alunos" label="Consulta Alunos" />
-                         <NavbarItem href="#/consulta-instrutores" label="Consulta Instrutores" />
-                         <NavbarItem href="#/consulta-avaliacoes" label="Consulta Avaliação Física" />
-                         <NavbarItem href="#/cadastro-exercicios-treino" label="Cadastro Exercícios Treino" />
+                         <NavbarItem href="#/consulta-alunos" label="Alunos" />
+                         <NavbarItem href="#/consulta-instrutores" label="Instrutores" />
+                         <NavbarItem href="#/consulta-avaliacoes" label="Avaliação Física" />
+                         <NavbarItem href="#/cadastro-exercicios-treino" label="Plano de Treino" />
+                         <NavbarItem href="#/consulta-exercicios" label="Exercícios" />
+                         <NavbarItem href="#/consulta-treinos" label="Treinos" />
                      </ul>
                  </div>
                  <a href="#/login" className="navbar-brand">Logout</a>
