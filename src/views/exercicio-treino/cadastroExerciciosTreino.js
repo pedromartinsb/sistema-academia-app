@@ -157,7 +157,7 @@ class CadastroExerciciosTreino extends React.Component {
         return (
             <>
             <NavbarInstrutor />
-            <Card title="Cadastro de Exercícios Treino">
+            <Card title="Cadastro Plano de Treino">
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="bs-component">
